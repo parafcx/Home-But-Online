@@ -1,0 +1,2266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Home, But Online.</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+
+</head>
+
+
+<style>
+/* Reset and basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== Top Buttons ===== */
+.top-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 18px;
+}
+
+.top-btn{
+    height:42px;
+    padding:0 18px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    color:#FFFFFF;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+    white-space:nowrap;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.top-btn:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.top-btn:active{
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+
+.top-btn svg{
+    width:18px;
+    height:18px;
+    color:#FFFFFF;
+    flex-shrink:0;
+
+    transition:transform .25s ease;
+}
+
+.top-btn:hover svg{
+    transform:scale(1.08);
+}
+
+.top-btn span{
+    color:#FFFFFF;
+    font-size:14px;
+    font-weight:500;
+}
+
+/* Body and layout styles */
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: transparent;
+  position: relative;
+}
+
+.container {
+  width: 91%;
+  height: 92%;
+  background: transparent; /* or rgba(255,255,255,0) */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top bar styles */
+.top-bar{
+    height:78px;
+
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+
+    padding:0 40px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:0 8px 24px rgba(0,0,0,.12);
+}
+
+/* Center Date */
+.top-date{
+    justify-self:center;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    font-weight:500;
+    letter-spacing:.3px;
+
+    color:#FFFFFF;
+    white-space:nowrap;
+    pointer-events:none;
+}
+
+.top-date-icon{
+    width:18px;
+    height:18px;
+    color:#C98A8A; /* Same as heart logo */
+    flex-shrink:0;
+}
+
+/* Remove the image layers */
+.top-bar::before,
+.top-bar::after{
+    display:none;
+}
+
+/* keep content above background */
+.top-bar > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Top-left section */
+.top-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo styles */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color:#FFFFFF;
+  user-select: none;
+  margin-right: 40px; /* Space between logo and buttons */
+}
+
+.heart {
+  width: 8px;
+  height: 8px;
+  background: #C98A8A;
+  position: relative;
+  transform: rotate(-45deg);
+  margin: 0 2px;
+}
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #C98A8A;
+  border-radius: 50%;
+}
+.heart::before {
+  top: -4px;
+  left: 0;
+}
+.heart::after {
+  top: 0;
+  left: 4px;
+}
+
+/* Navigation styles */
+.nav{
+    justify-self:end;   /* Push nav back to the far right */
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.nav a{
+    height:42px;
+    padding:0 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-decoration:none;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.nav a:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.nav a:active{
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+
+.nav a.active{
+    background:rgba(255,255,255,.24);
+
+    border:2px solid rgba(255,255,255,.95);
+
+    color:#FFFFFF;
+
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.18),
+        0 4px 14px rgba(201,138,138,.15);
+}
+
+.nav a::after{
+    display:none;
+}
+
+/* Content layout */
+.content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+.content::before{
+    display:none;
+}
+.content > *{
+    position:relative;
+    z-index:1;
+}
+/* Card styles */
+.main-card,
+.main-content,
+.signature {
+  display: none;
+}
+
+/* Left column styles */
+.left-column {
+  position: absolute;
+  top: 50%;
+  right: 302px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Memory card styles */
+.memory-card{
+    width:230px;
+    height:189px;
+
+    position:relative;
+    overflow:hidden;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+}
+
+/* Anniversary card styles */
+.anniversary-card{
+    width:230px;
+    height:189px;
+
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-radius:12px;
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+}
+
+
+
+.anniversary-card:hover{
+
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.anniversary-title{
+    margin-top:22px;
+
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    color:#fff;
+}
+
+.anniversary-line{
+    width:40px;
+    height:2px;
+    margin:8px auto 0;
+    background:#FFFFFF;
+    border-radius:999px;
+}
+
+.anniversary-days{
+    margin-top:28px;
+
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:30px;
+    font-weight:500;
+
+    color:#fff;
+
+    text-shadow:none;
+}
+
+.anniversary-date{
+    margin-top:10px;
+
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+
+    color:rgba(255,255,255,.72);
+}
+
+/* Notes panel styles */
+.notes-panel{
+    position:absolute;
+    top:calc(50% - 200px);
+    right:42px;
+
+    width:230px;
+    height:189px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-radius:12px;
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+
+    padding-top:24px;
+}
+.notes-panel:hover{
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.notes-title {
+  margin-top: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.notes-line {
+  width: 25px;
+  height: 1.3px;
+  background: rgba(255, 255, 255, 0.8);
+  margin-top: 6px;
+}
+.notes-empty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  color: #888888;
+  line-height: 1.35;
+}
+
+/* Bottom bar styles */
+/* ===== Bottom Bar (Same as Password Page Top Bar) ===== */
+.bottom-bar{
+    height:78px;
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 42px;
+
+    flex-shrink:0;
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+}
+
+/* Remove old image background */
+.bottom-bar::before,
+.bottom-bar::after{
+    display:none;
+}
+
+/* Keep content above glass */
+.bottom-bar > *{
+    position:relative;
+    z-index:2;
+}
+
+.footer-copyright {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color:#FFFFFF;
+  user-select: none;
+}
+
+.footer-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color:#FFFFFF;
+}
+
+.footer-icon {
+  width: 16px;
+  height: 16px;
+  color:#C98A8A;
+  flex-shrink: 0;
+}
+
+.footer-date {
+  color:#FFFFFF;
+  font-weight: 500;
+}
+
+.footer-right{
+  margin-left: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  user-select: none;
+}
+
+.footer-for{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color:#FFFFFF;
+}
+
+.footer-name{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  color:#FFFFFF;
+}
+
+/* Timezone styles */
+
+/* Timezone styles */
+.timezone-card{
+    position:relative;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    padding-left:42px;
+    gap:34px;
+
+    background:rgba(255,255,255,.08);
+}
+
+.timezone-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.clock-icon {
+  width: 24px;
+  height: 24px;
+  color: #FFFFFF;
+  flex-shrink: 0;
+  margin-top: 0;
+
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.35));
+}
+
+
+/* Keep content above the image */
+
+.timezone-image{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:blur(1.5px);
+    transform:scale(1.08);
+}
+
+.timezone-overlay{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:120px;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.42),
+        rgba(0,0,0,.18),
+        transparent
+    );
+
+    pointer-events:none;
+}
+
+.timezone-time {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: #FFFFFF;
+
+  text-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+
+.timezone-label {
+  margin-top: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 520;
+  color: rgba(255,255,255,.9);
+}
+
+/* Playlist Column styles */
+.playlist-column {
+  position: absolute;
+  top: 50%;
+  right: 562px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.playlist-card{
+    width:230px;
+    height:189px;
+
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-radius:12px;
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+}
+
+.playlist-card:hover{
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.playlist-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+
+.music-icon,
+.poem-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.music-icon {
+  color: #C98A8A;
+}
+
+.poem-icon {
+  color: #C98A8A;
+}
+
+.playlist-text {
+  width: 160px;
+  margin-top: 18px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #888888;
+  line-height: 1.35;
+}
+
+.playlist-btn {
+  width: 160px;
+  height: 42px;
+  margin-top: auto;
+  margin-bottom: 24px;
+  border: none;
+  border-radius: 8px;
+  background: #CC8783;
+  color: #F4F1EE;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: none;
+}
+.playlist-btn:hover {
+  background: #CC8783;
+}
+.playlist-btn:active {
+  background: #CC8783;
+}
+
+
+
+
+/* Featured Box styles */
+.featured-box{
+    position:absolute;
+    top:50%;
+    left:48px;
+    transform:translateY(-50%);
+
+    width:518px;
+    height:400px;
+
+    overflow:hidden;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+}
+
+.featured-box:hover{
+    transform:translateY(calc(-50% - 3px));
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+
+.featured-btn{
+    position:absolute;
+    left:50%;
+    bottom:24px;
+    transform:translateX(-50%);
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,0.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,0.18); /* transparent */
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+    z-index:2;
+
+    transition:all .25s ease;
+}
+
+.featured-btn:hover{
+    transform:translateX(-50%) translateY(-2px);
+    background:rgba(255,255,255,0.28);
+    border-color:rgba(255,255,255,0.4);
+}
+
+.featured-btn:active{
+    transform:translateX(-50%);
+    background:rgba(255,255,255,0.22);
+}
+
+/* Popup styles */
+.poem-popup{
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(0,0,0,.30);
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease;
+
+    z-index:9999;
+}
+
+.poem-popup.show{
+    opacity:1;
+    visibility:visible;
+}
+.poem-box{
+
+    width:720px;
+    max-width:92%;
+    height:680px;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+    border-radius:12px;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+
+    animation:popup .35s cubic-bezier(.22,.61,.36,1);
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.poem-box:hover{
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22),
+        0 0 24px rgba(255,255,255,.08),
+        0 0 40px rgba(201,138,138,.12);
+
+}
+@keyframes popup{
+
+    from{
+        opacity:0;
+        transform:translateY(25px) scale(.96);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
+}
+.poem-header{
+
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+
+    padding:24px 28px 12px;
+
+}
+.close-poem{
+
+    height:38px;
+    padding:0 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    border:1px solid rgba(255,255,255,.28);
+
+    backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.close-poem:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+
+}
+.poem-content{
+
+    flex:1;
+
+    padding:20px 70px 40px;
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    scroll-behavior:smooth;
+}
+
+.poem-content h2{
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:28px;
+    font-weight:500;
+
+    color:#FFFFFF;
+
+    margin-bottom:28px;
+}
+
+.poem-content p{
+    white-space:pre-line;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    line-height:1.9;
+
+    color:#FFFFFF;
+
+    text-align:left;
+
+    margin:0;
+
+    text-shadow:0 1px 3px rgba(0,0,0,.3);
+}
+
+.poem-content::-webkit-scrollbar{
+    width:8px;
+}
+
+.poem-content::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+.poem-content::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.25);
+    border-radius:999px;
+}
+
+.poem-content::-webkit-scrollbar-thumb:hover{
+    background:rgba(255,255,255,.4);
+}
+.motd-box .poem-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-20px);
+  padding: 20px 60px;
+  overflow: hidden;
+}
+.poem-content p{
+
+    white-space:pre-line;
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    font-size:16px;
+    font-weight:400;
+
+    color:rgba(255,255,255,.92);
+
+    line-height:1.9;
+
+    text-align:left;
+
+    margin-top:34px;
+
+    text-shadow:0 1px 3px rgba(0,0,0,.3);
+
+}
+
+.poem-content h2::after{
+
+    content:"";
+
+    display:block;
+
+    width:42px;
+    height:2px;
+
+    margin:14px auto 0;
+
+    background:rgba(255,255,255,.9);
+
+    border-radius:999px;
+
+}
+.poem-content p {
+  white-space: pre-line;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1.9;
+  text-align: left;
+  margin-top: 0;
+}
+.poem-footer{
+
+    padding:22px;
+
+    text-align:center;
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    font-size:14px;
+
+    color:rgba(255,255,255,.75);
+
+    border-top:1px solid rgba(255,255,255,.12);
+
+}
+
+.poem-date{
+
+    color:#FFFFFF;
+
+    font-weight:500;
+
+}
+
+/* Message of the Day popup styles */
+.motd-box {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+}
+.motd-box .poem-content p {
+  margin: 0;
+  white-space: pre-line;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1.9;
+  text-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+
+.motd-box > *:not(.motd-image):not(.motd-overlay){
+    position:relative;
+    z-index:2;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background:url("images/mainbackground.jpg") center/cover no-repeat;
+
+    filter:none;
+    transform:none;
+
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.12);
+
+    z-index:-1;
+    pointer-events:none;
+}
+
+
+
+/* Keep content above the image */
+.timezone-card > *:not(.timezone-image):not(.timezone-overlay){
+    position: relative;
+    z-index: 2;
+}
+/* ---------- Poem Card ---------- */
+
+
+/* Notes button (same style as Spotify/Poem) */
+
+.notes-btn{
+    position: relative;
+    z-index: 1;
+
+    margin-top:auto;
+    margin-bottom:20px;
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.notes-btn:hover{
+    z-index:2;
+
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.28);
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.notes-btn:active{
+    transform:translateY(0);
+    background:rgba(255,255,255,.22);
+}
+
+
+
+.poem-content-card{
+    position:relative;
+    z-index:2;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding-top:24px;
+}
+
+/* White text */
+
+.playlist-poem .playlist-title,
+.playlist-poem .playlist-text{
+    color:#FFFFFF;
+}
+
+.playlist-poem .poem-icon{
+    color:#FFFFFF;
+}
+
+.playlist-poem .playlist-text{
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+}
+
+/* Glass button */
+
+.playlist-poem .playlist-btn{
+
+    margin-top:auto;
+    margin-bottom:20px;
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    transition:all .25s ease;
+}
+
+.playlist-poem .playlist-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+
+    border-color:rgba(255,255,255,.4);
+}
+
+.playlist-poem .playlist-btn:active{
+
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+/* ===== MOTD Close Button ===== */
+
+.motd-close-btn{
+    height:34px;
+    padding:0 18px;
+
+    border-radius:8apx;
+
+    background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.35);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#FFFFFF;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.08),
+        inset 0 1px 0 rgba(255,255,255,.35);
+
+    transition:
+        all .25s ease,
+        transform .12s ease;
+}
+
+/* Hover */
+.motd-close-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+    border:1px solid rgba(255,255,255,.5);
+
+    box-shadow:
+        0 6px 18px rgba(201,143,136,.25),
+        inset 0 1px 0 rgba(255,255,255,.4);
+}
+
+/* Click */
+.motd-close-btn:active{
+
+    transform:scale(.96) translateY(1px);
+}
+/* MOTD footer */
+
+.motd-box .poem-footer{
+    color:rgba(255,255,255,.92);
+
+    text-shadow:0 1px 4px rgba(0,0,0,.35);
+}
+
+.motd-box .poem-date{
+    color:#FFFFFF;
+    font-weight:500;
+}
+/* White outline for all content boxes */
+.featured-box,
+.playlist-card,
+.notes-panel,
+.poem-box{
+    border:1.5px solid rgba(255,255,255,.6);
+}
+.notes-btn:active{
+    transform:translateY(0);
+    background:rgba(255,255,255,.22);
+}
+
+/* Notes card white text */
+.notes-panel .playlist-text{
+    width:160px;
+    margin-top:18px;
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    font-weight:400;
+    line-height:1.35;
+
+    color:#FFFFFF;
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+}
+
+.notes-panel .notes-title{
+    color:#FFFFFF;
+}
+
+.notes-panel .notes-line{
+    background:rgba(255,255,255,.85);
+}
+
+/* ---------- Poem Card ---------- */
+.playlist-poem{
+    position:relative;
+    overflow:hidden;
+    padding:0;
+}
+
+.playlist-card:hover,
+.notes-panel:hover,
+.surprise-panel:hover,
+.timezone-card:hover{
+
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+.notes-icon{
+    width:18px;
+    height:18px;
+    flex-shrink:0;
+    color:#FFFFFF;
+}
+
+
+.playlist-spotify{
+    position:relative;
+    overflow:hidden;
+    padding:0;
+}
+
+
+
+.playlist-content{
+    position:relative;
+    z-index:2;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding-top:24px;
+}
+
+.playlist-spotify .playlist-title,
+.playlist-spotify .playlist-text{
+    color:#FFFFFF;
+}
+
+.playlist-spotify .music-icon{
+    color:#FFFFFF;
+}
+
+.playlist-spotify .playlist-text{
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+}
+
+.playlist-spotify .playlist-btn{
+    margin-top:auto;
+    margin-bottom:20px;
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:all .25s ease;
+}
+
+.playlist-spotify .playlist-btn:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+
+    border-color:rgba(255,255,255,.4);
+}
+
+.playlist-spotify .playlist-btn:active{
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+.featured-content{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:flex-start;
+
+    gap:14px;
+
+    padding:48px 52px 90px; /* was 28px */
+
+    z-index:2;
+}
+
+.featured-title{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:28px;
+    font-weight:500;
+
+    color:#FFFFFF;
+
+    letter-spacing:.3px;
+}
+
+.featured-line{
+    width:40px;
+    height:1px;
+
+    margin:8px 0 14px;   /* smaller gap */
+
+    background:rgba(255,255,255,.9);
+}
+
+.featured-subtitle{
+    margin-bottom:12px;  /* was 22px */
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:18px;
+    font-weight:500;
+
+    color:#FFFFFF;
+}
+
+.featured-text{
+    max-width:550px;
+
+    margin-top:-6px;
+
+    text-align:left;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:400;
+    line-height:1.65;
+
+    color:rgba(255,255,255,.92);
+
+    text-shadow:0 1px 3px rgba(0,0,0,.28);
+}
+
+.welcome-heading{
+    display:block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:15px;   /* increase if you want it bigger */
+    font-weight:700;
+    color:#FFFFFF;
+    margin-bottom:1px;
+}
+
+.featured-heading{
+    width:100%;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:18px;      /* same size as "Our Playlist" */
+    font-weight:500;      /* slightly bolder */
+
+    color:#FFFFFF;
+
+    text-align:left;
+
+    margin-bottom:10px;
+}
+
+.surprise-panel{
+    position:absolute;
+    top:calc(50% + 11px);
+    right:42px;
+
+    width:230px;
+    height:189px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-radius:12px;
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+
+    padding-top:24px;
+}
+
+.surprise-panel:hover{
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.surprise-panel .playlist-text{
+    width:160px;
+    margin-top:18px;
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    font-weight:400;
+    line-height:1.35;
+
+    color:#FFFFFF;
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+}
+.surprise-btn{
+    position:relative;
+    z-index:1;
+
+    margin-top:auto;
+    margin-bottom:20px;
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.surprise-btn:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.surprise-btn:active{
+    transform:translateY(0);
+    background:rgba(255,255,255,.22);
+}
+
+.poem-box{
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+}
+
+.poem-box:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+#messagePopup .poem-content{
+    overflow-y:auto;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+    padding:30px 70px 40px;
+}
+
+#messagePopup .poem-content{
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.28) transparent;
+}
+
+#messagePopup .poem-content::-webkit-scrollbar{
+    width:4px;
+}
+
+#messagePopup .poem-content::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+#messagePopup .poem-content::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.28);
+    border-radius:999px;
+}
+
+#messagePopup .poem-content::-webkit-scrollbar-thumb:hover{
+    background:rgba(255,255,255,.42);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Updated top bar structure -->
+  <div class="top-bar">
+    <div class="top-left">
+      <div class="logo">
+        <span>A</span>
+        <span class="heart"></span>
+        <span class="A">A</span>
+      </div>
+      <div class="top-buttons">
+        <button class="top-btn" id="todoBtn">
+          <!-- Checklist Icon -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="6" y="4" width="12" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <rect x="9" y="2.8" width="6" height="3" rx="1.2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M9.5 12.3L11.5 14.3L14.8 10.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Our To-Do List</span>
+        </button>
+        <button class="top-btn" id="motdBtn">
+          <!-- Message of the Day icon -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M5 7l7 6 7-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Today's message</span>
+        </button>
+      </div>
+    </div>
+    
+<!-- Center Date -->
+<div class="top-date">
+    <svg class="top-date-icon" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="5" width="18" height="16" rx="2"
+              stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8 3V7M16 3V7M3 10H21"
+              stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round"/>
+    </svg>
+
+    <span id="topDate"></span>
+</div>
+
+<!-- Keep the rest of your top-bar content (nav, etc.) as is -->
+    <nav class="nav">
+      <a href="mainpage.html" class="active">Home</a>
+      <a href="ourmemoriespage.html">Our Memories</a>
+      <a href="letterspage.html">Your Letters</a>
+      <a href="aboutpage.html">About</a>
+    </nav>
+  </div>
+
+  <div class="content">
+    <div class="featured-box">
+
+    <div class="featured-content">
+
+    <div class="featured-heading">Hi darling,</div>
+
+    <p class="featured-text">
+        Yeshshsh, you're here! I was waiting for your arrival. Okay, so before everything catches your eye, I just want to say that this little place on the internet belongs to us. Everything here was made with you in mind. I wanted to make something special for you, so here it is. I hope it brings a smile to your face whenever you come back here, and I'll probably keep adding stuff here whenever I can. I could keep writing here forever, but then there wouldn't be much left for the letter. So, whenever you're ready, go read the letter I left for you below. I hope you like it.
+    </p>
+
+</div>
+
+    <button class="featured-btn" id="messageBtn">
+        Read Letter
+    </button>
+
+</div>
+
+    <!-- Playlist Column -->
+    <div class="playlist-column">
+      <!-- playlist cards as before -->
+      <div class="playlist-card playlist-spotify">
+        
+
+<div class="playlist-content">
+
+    <div class="playlist-title">
+        <svg class="music-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M9 17.5a2.5 2.5 0 1 0 2.5 2.5V8.5l8-1.8v8.8a2.5 2.5 0 1 0 1.5 2.3V5L11.5 7.1v10.4A2.5 2.5 0 0 0 9 17.5Z"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+        </svg>
+
+        <span>Our Playlist</span>
+    </div>
+
+    <div class="playlist-text">
+        A playlist we've been building together.
+    </div>
+
+    <button class="playlist-btn" id="spotifyBtn">
+        Open Spotify
+    </button>
+
+</div>
+      </div>
+
+      <!-- Duplicate Poem Box -->
+      <div class="playlist-card playlist-poem">
+
+    
+
+    <div class="poem-content-card">
+
+        <div class="playlist-title">
+            <svg class="poem-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 21l3.8-.8L19.4 7.6a1.5 1.5 0 000-2.1l-.9-.9a1.5 1.5 0 00-2.1 0L3.8 17.2 3 21z"/>
+            </svg>
+
+            <span>Poems For You</span>
+        </div>
+
+        <div class="playlist-text">
+            A collection of poems written for you.
+        </div>
+
+        <button class="playlist-btn" id="skribblBtn">
+            View Poem
+        </button>
+
+    </div>
+
+</div>
+    </div>
+
+    <!-- Left Column with anniversary and timezone -->
+    <div class="left-column">
+      <div class="anniversary-card">
+
+    <div class="anniversary-title">
+        Our Anniversary
+    </div>
+
+    <div class="anniversary-line"></div>
+
+    <div class="anniversary-days"
+         id="anniversaryDays">
+    </div>
+
+    <div class="anniversary-date">
+        Until April 27
+    </div>
+
+</div>
+      <div class="memory-card timezone-card">
+
+   
+
+    <div class="timezone-row">
+      <svg class="clock-icon" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 7V12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+
+      <div>
+        <div class="timezone-time" id="myTime"></div>
+        <div class="timezone-label">India</div>
+      </div>
+    </div>
+
+    <div class="timezone-row">
+      <svg class="clock-icon" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 7V12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+
+      <div>
+        <div class="timezone-time" id="yourTime"></div>
+        <div class="timezone-label">South Africa</div>
+      </div>
+    </div>
+
+</div>
+    </div>
+
+    <!-- Notes Panel -->
+<div class="notes-panel">
+
+    <div class="playlist-title">
+        <svg class="notes-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M7 3h7l5 5v13H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"/>
+            <path d="M14 3v5h5"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"/>
+            <path d="M10 13h6M10 17h4"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"/>
+        </svg>
+
+        <span>Notes</span>
+    </div>
+
+    <div class="playlist-text">
+        A place to keep our little notes and thoughts.
+    </div>
+
+    <button class="notes-btn" id="notesBtn">
+        Open Notes
+    </button>
+
+</div>
+
+<!-- Surprise Panel -->
+<div class="surprise-panel">
+
+    <div class="playlist-title">
+        <svg class="notes-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3L14.8 8.7L21 9.5L16.5 13.8L17.6 20L12 17L6.4 20L7.5 13.8L3 9.5L9.2 8.7L12 3Z"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linejoin="round"/>
+        </svg>
+
+        <span>Surprise</span>
+    </div>
+
+    <div class="playlist-text">
+        Working on something special. Stay tuned.
+    </div>
+
+    <button class="surprise-btn" id="surpriseBtn">
+    Coming Soon
+</button>
+
+</div>
+
+
+</div>
+<!-- Bottom Bar -->
+<div class="bottom-bar">
+    <div class="footer-info">
+      <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.14 12.94a7.43 7.43 0 0 0 .05-.94 7.43 7.43 0 0 0-.05-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.28 7.28 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.49.42l-.36 2.54a7.28 7.28 0 0 0-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.48a.5.5 0 0 0 .12.64l2.03 1.58a7.43 7.43 0 0 0-.05.94c0 .32.02.63.05.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.39 1.05.71 1.63.94l.36 2.54a.5.5 0 0 0 .49.42h3.8a.5.5 0 0 0 .49-.42l.36-2.54c.58-.23 1.13-.55 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"/>
+      </svg>
+      <span>Last updated on:</span>
+      <span class="footer-date">05 August 2026</span>
+    </div>
+    <!-- Centered copyright -->
+    <div class="footer-copyright">© Home, But Online. 2026</div>
+
+<div class="footer-right">
+    <span class="footer-for">for my</span>
+    <span class="footer-name">Aarti</span>
+</div>
+
+</div>
+</div>
+
+<!-- Poem Popup -->
+<div class="poem-popup" id="poemPopup">
+  <div class="poem-box">
+    <div class="poem-header">
+      <span class="close-poem" id="closePoem">Close</span>
+    </div>
+    <div class="poem-content">
+      <h2>Poem Title</h2>
+      <p>Nothing to see here yet.</p>
+    </div>
+    <div class="poem-footer">
+      <span>Added on:</span>
+      <span class="poem-date">30 June 2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- Message Popup -->
+<div class="poem-popup" id="messagePopup">
+  <div class="poem-box">
+    <div class="poem-header">
+      <span class="close-poem" id="closeMessage">Close</span>
+    </div>
+    <div class="poem-content">
+
+
+<p>Okay, so I don't know where to start, to be honest. I've never written a big letter before, especially not for a website. I'll try my best, so here we go.
+
+Firstly, I just want to thank you for being in my life. You've become a part of my life—and honestly, that's an understatement. You've become a major part of it. The day we first met, I had no idea what was going to happen. Life is so silly sometimes, right? It teases you, punishes you, and sometimes rewards you with something that's going to change everything in your life. For me, that came in the form of a girl like you.
+
+The moment we started talking is something I would love to relive once again. All the time we spent together talking, playing games, making fun of each other, watching movies, and trying our best to love each other from so far away... those are some of my favorite memories.
+
+Long distance isn't easy, right? You know it, I know it, and everyone knows it too. People usually say, "Ugh, long distance sucks. It always ends in a week or a month," or something like that. But I'm not here to prove them wrong or right. I'm here because I know I have a purpose—a purpose to spend my life with you.
+
+And I don't like glazing, but this time I'm keeping that side of me aside, so get outta here, overthinker Aadarsh.
+
+I just want to talk about you. You are so sweet, loving, caring, and kind. I don't know if I say this enough, but you make me proud every single day. You deserve every bit of happiness and every bit of love in this world, and I hope that I'm always a part of that list too.
+
+I don't want to make this too emotional, but who am I kidding? I don't even think this is enough to make someone cry. I don't know if you're recording yourself while reading this, but if you are, please do smile for me. Even though I can't see it right now, I can definitely feel it.
+
+That red string theory you told me about... I think there's a little truth to it.
+
+I might run out of words, but I'll never run out of feelings for you.
+
+After months of work, I can finally give you something—a place made just for us. A place for our memories, our moments, and everything in between. I really hope you like it. Please do let me know what you think, and enjoy your stay. Explore a little, take your time, and I'll see you soon.
+
+I love you so muchh.</p>
+
+</div>
+
+<div class="poem-footer">
+    <span>Added on:</span>
+    <span class="poem-date">04 August 2026</span>
+</div>
+  </div>
+</div>
+
+<!-- Message of the Day Popup (New) -->
+<div class="poem-popup" id="motdPopup">
+  <div class="poem-box motd-box">
+
+   
+
+    
+    <div class="poem-header">
+    <span class="close-poem" id="closeMotd">
+        Close
+    </span>
+</div>
+    <div class="poem-content">
+    <p>
+Hii darling, if you are reading this, I just want you to know how much I love you. I am so lucky to have you by my side, and I hope that I always do. I wanted to make you feel special, so here it is. You complete me.
+
+With lots of hugs and love, from someone who cares.
+    </p>
+</div>
+
+<div class="poem-footer"></div>
+  </div>
+</div>
+<!-- Notes Popup -->
+<div class="poem-popup" id="notesPopup">
+
+    <div class="poem-box">
+
+        <div class="poem-header">
+            <span class="close-poem" id="closeNotes">
+                Close
+            </span>
+        </div>
+
+        <div class="poem-content">
+</div>
+
+        <div class="poem-footer">
+            <span>Updated on:</span>
+            <span class="poem-date">05 August 2026</span>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+<script>
+function updateAnniversaryCountdown() {
+  const today = new Date();
+  let nextAnniversary = new Date(today.getFullYear(), 3, 27);
+  if (today > nextAnniversary) {
+    nextAnniversary = new Date(today.getFullYear() + 1, 3, 27);
+  }
+  const oneDay = 1000 * 60 * 60 * 24;
+  const daysLeft = Math.ceil((nextAnniversary - today) / oneDay);
+  document.getElementById("anniversaryDays").textContent = `${daysLeft} Days`;
+}
+updateAnniversaryCountdown();
+
+function updateTimes() {
+  const myTime = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Kolkata"
+  });
+  const yourTime = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Africa/Johannesburg"
+  });
+  document.getElementById("myTime").textContent = myTime.toLowerCase();
+  document.getElementById("yourTime").textContent = yourTime.toLowerCase();
+}
+updateTimes();
+setInterval(updateTimes, 1000);
+
+// ---------- Top Bar Date ----------
+function updateTopDate() {
+    const today = new Date();
+
+    document.getElementById("topDate").textContent =
+        today.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
+}
+
+updateTopDate();
+
+// Refresh once every minute (updates after midnight)
+setInterval(updateTopDate, 60000);
+
+// Spotify button event
+document.getElementById("spotifyBtn").addEventListener("click", function () {
+  window.open("https://open.spotify.com/playlist/0kg3mNa9yFq3A4f76xhyIg", "_blank");
+});
+
+// Skribbl (Poem) popup
+const poemPopup = document.getElementById("poemPopup");
+document.getElementById("skribblBtn").addEventListener("click", () => {
+  poemPopup.classList.add("show");
+});
+document.getElementById("closePoem").addEventListener("click", () => {
+  poemPopup.classList.remove("show");
+});
+poemPopup.addEventListener("click", (e) => {
+  if (e.target === poemPopup) {
+    poemPopup.classList.remove("show");
+  }
+});
+
+// Message popup
+const messagePopup = document.getElementById("messagePopup");
+document.getElementById("messageBtn").addEventListener("click", () => {
+  messagePopup.classList.add("show");
+});
+document.getElementById("closeMessage").addEventListener("click", () => {
+  messagePopup.classList.remove("show");
+});
+messagePopup.addEventListener("click", (e) => {
+  if (e.target === messagePopup) {
+    messagePopup.classList.remove("show");
+  }
+});
+
+// --------- NEW: MOTD Popup Event Listeners ---------
+const motdPopup = document.getElementById("motdPopup");
+document.getElementById("motdBtn").addEventListener("click", () => {
+  motdPopup.classList.add("show");
+});
+document.getElementById("closeMotd").addEventListener("click", () => {
+  motdPopup.classList.remove("show");
+});
+motdPopup.addEventListener("click", (e) => {
+  if (e.target === motdPopup) {
+    motdPopup.classList.remove("show");
+  }
+});
+// --------- Notes Popup ---------
+const notesPopup = document.getElementById("notesPopup");
+
+document.getElementById("notesBtn").addEventListener("click", () => {
+  notesPopup.classList.add("show");
+});
+
+document.getElementById("closeNotes").addEventListener("click", () => {
+  notesPopup.classList.remove("show");
+});
+
+notesPopup.addEventListener("click", (e) => {
+  if (e.target === notesPopup) {
+    notesPopup.classList.remove("show");
+  }
+});
+</script>
+</body>
+</html>

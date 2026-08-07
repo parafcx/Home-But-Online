@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Home, But Online.</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+
+</head>
+
+
+<style>
+/* Reset and basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== Top Buttons ===== */
+.top-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 18px;
+}
+
+.top-btn{
+    height:42px;
+    padding:0 18px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    color:#FFFFFF;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+    white-space:nowrap;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.top-btn:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.top-btn:active{
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+
+.top-btn svg{
+    width:18px;
+    height:18px;
+    color:#FFFFFF;
+    flex-shrink:0;
+
+    transition:transform .25s ease;
+}
+
+.top-btn:hover svg{
+    transform:scale(1.08);
+}
+
+.top-btn span{
+    color:#FFFFFF;
+    font-size:14px;
+    font-weight:500;
+}
+
+/* Body and layout styles */
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: transparent;
+  position: relative;
+}
+
+.container {
+  width: 91%;
+  height: 92%;
+  background: transparent; /* or rgba(255,255,255,0) */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top bar styles */
+.top-bar{
+    height:78px;
+    position:relative;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 40px;
+
+    flex-shrink:0;
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+}
+
+/* Remove the image layers */
+.top-bar::before,
+.top-bar::after{
+    display:none;
+}
+
+/* keep content above background */
+.top-bar > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Top-left section */
+.top-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo styles */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color:#FFFFFF;
+  user-select: none;
+  margin-right: 40px; /* Space between logo and buttons */
+}
+
+.heart {
+  width: 8px;
+  height: 8px;
+  background: #C98A8A;
+  position: relative;
+  transform: rotate(-45deg);
+  margin: 0 2px;
+}
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #C98A8A;
+  border-radius: 50%;
+}
+.heart::before {
+  top: -4px;
+  left: 0;
+}
+.heart::after {
+  top: 0;
+  left: 4px;
+}
+
+/* Navigation styles */
+.nav{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.nav a{
+    height:42px;
+    padding:0 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-decoration:none;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.nav a:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.nav a:active{
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+
+.nav a.active{
+    background:rgba(255,255,255,.24);
+
+    border:2px solid rgba(255,255,255,.95);
+
+    color:#FFFFFF;
+
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.18),
+        0 4px 14px rgba(201,138,138,.15);
+}
+
+.nav a::after{
+    display:none;
+}
+
+/* Content layout */
+.content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+.content::before{
+    display:none;
+}
+.content > *{
+    position:relative;
+    z-index:1;
+}
+/* Card styles */
+.main-card,
+.main-content,
+.signature {
+  display: none;
+}
+
+/* Left column styles */
+.left-column {
+  position: absolute;
+  top: 50%;
+  right: 302px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Memory card styles */
+.memory-card{
+    width:230px;
+    height:189px;
+
+    position:relative;
+    overflow:hidden;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+}
+
+/* Anniversary card styles */
+.anniversary-card{
+    width:230px;
+    height:189px;
+
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-radius:12px;
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+}
+
+
+
+.anniversary-card:hover{
+
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.anniversary-title{
+    margin-top:22px;
+
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    color:#fff;
+}
+
+.anniversary-line{
+    width:40px;
+    height:2px;
+    margin:8px auto 0;
+    background:#FFFFFF;
+    border-radius:999px;
+}
+
+.anniversary-days{
+    margin-top:28px;
+
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:30px;
+    font-weight:500;
+
+    color:#fff;
+
+    text-shadow:none;
+}
+
+.anniversary-date{
+    margin-top:10px;
+
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+
+    color:rgba(255,255,255,.72);
+}
+
+/* Notes panel styles */
+.notes-panel{
+    position:absolute;
+    top:calc(50% - 200px);
+    right:42px;
+
+    width:230px;
+    height:189px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-radius:12px;
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+
+    padding-top:24px;
+}
+.notes-panel:hover{
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.notes-title {
+  margin-top: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.notes-line {
+  width: 25px;
+  height: 1.3px;
+  background: rgba(255, 255, 255, 0.8);
+  margin-top: 6px;
+}
+.notes-empty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  color: #888888;
+  line-height: 1.35;
+}
+
+/* Bottom bar styles */
+/* ===== Bottom Bar (Same as Password Page Top Bar) ===== */
+.bottom-bar{
+    height:78px;
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 42px;
+
+    flex-shrink:0;
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+}
+
+/* Remove old image background */
+.bottom-bar::before,
+.bottom-bar::after{
+    display:none;
+}
+
+/* Keep content above glass */
+.bottom-bar > *{
+    position:relative;
+    z-index:2;
+}
+
+.footer-copyright {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color:#FFFFFF;
+  user-select: none;
+}
+
+.footer-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color:#FFFFFF;
+}
+
+.footer-icon {
+  width: 16px;
+  height: 16px;
+  color:#C98A8A;
+  flex-shrink: 0;
+}
+
+.footer-date {
+  color:#FFFFFF;
+  font-weight: 500;
+}
+
+.footer-right{
+  margin-left: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  user-select: none;
+}
+
+.footer-for{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color:#FFFFFF;
+}
+
+.footer-name{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  color:#FFFFFF;
+}
+
+/* Timezone styles */
+
+/* Timezone styles */
+.timezone-card{
+    position:relative;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    padding-left:42px;
+    gap:34px;
+
+    background:rgba(255,255,255,.08);
+}
+
+.timezone-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.clock-icon {
+  width: 24px;
+  height: 24px;
+  color: #FFFFFF;
+  flex-shrink: 0;
+  margin-top: 0;
+
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.35));
+}
+
+
+/* Keep content above the image */
+
+.timezone-image{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:blur(1.5px);
+    transform:scale(1.08);
+}
+
+.timezone-overlay{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:120px;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.42),
+        rgba(0,0,0,.18),
+        transparent
+    );
+
+    pointer-events:none;
+}
+
+.timezone-time {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: #FFFFFF;
+
+  text-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+
+.timezone-label {
+  margin-top: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 520;
+  color: rgba(255,255,255,.9);
+}
+
+/* Playlist Column styles */
+.playlist-column {
+  position: absolute;
+  top: 50%;
+  right: 562px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.playlist-card{
+    width:230px;
+    height:189px;
+
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-radius:12px;
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+}
+
+.playlist-card:hover{
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.playlist-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+
+.music-icon,
+.poem-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.music-icon {
+  color: #C98A8A;
+}
+
+.poem-icon {
+  color: #C98A8A;
+}
+
+.playlist-text {
+  width: 160px;
+  margin-top: 18px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #888888;
+  line-height: 1.35;
+}
+
+.playlist-btn {
+  width: 160px;
+  height: 42px;
+  margin-top: auto;
+  margin-bottom: 24px;
+  border: none;
+  border-radius: 8px;
+  background: #CC8783;
+  color: #F4F1EE;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: none;
+}
+.playlist-btn:hover {
+  background: #CC8783;
+}
+.playlist-btn:active {
+  background: #CC8783;
+}
+
+
+
+
+/* Featured Box styles */
+.featured-box{
+    position:absolute;
+    top:50%;
+    left:48px;
+    transform:translateY(-50%);
+
+    width:518px;
+    height:400px;
+
+    overflow:hidden;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+}
+
+.featured-box:hover{
+    transform:translateY(calc(-50% - 3px));
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+
+.featured-btn{
+    position:absolute;
+    left:50%;
+    bottom:24px;
+    transform:translateX(-50%);
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,0.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,0.18); /* transparent */
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+    z-index:2;
+
+    transition:all .25s ease;
+}
+
+.featured-btn:hover{
+    transform:translateX(-50%) translateY(-2px);
+    background:rgba(255,255,255,0.28);
+    border-color:rgba(255,255,255,0.4);
+}
+
+.featured-btn:active{
+    transform:translateX(-50%);
+    background:rgba(255,255,255,0.22);
+}
+
+/* Popup styles */
+.poem-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 9999;
+}
+.poem-popup.show {
+  opacity: 1;
+  visibility: visible;
+}
+.poem-box {
+  width: 540px;
+  max-width: 90%;
+  height: 560px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04),
+              0 10px 24px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  animation: popup 0.25s ease;
+}
+@keyframes popup {
+  from {
+    transform: translateY(15px) scale(.98);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+.poem-header{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+
+    padding:20px 24px 18px;
+}
+.close-poem {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFFFFF;
+
+  cursor: pointer;
+
+  transition: opacity 0.2s ease;
+
+  padding: 6px 10px;
+  border-radius: 6px;
+
+  text-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+
+.close-poem:hover {
+  opacity: 0.75;
+}
+.poem-content {
+  flex: 1;
+  padding: 10px 60px 50px;
+  overflow-y: auto;
+}
+.motd-box .poem-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-20px);
+  padding: 20px 60px;
+  overflow: hidden;
+}
+.poem-content h2 {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #CC8783;
+  letter-spacing: 0.5px;
+  margin-bottom: 30px;
+}
+.poem-content p {
+  white-space: pre-line;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #888888;
+  line-height: 1.9;
+  text-align: center;
+  margin-top: 150px;
+}
+.poem-footer {
+  padding: 18px 0 22px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #666;
+}
+.poem-date {
+  color: #C98A8A;
+  font-weight: 500;
+}
+
+/* Message of the Day popup styles */
+.motd-box {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+}
+.motd-box .poem-content p {
+  margin: 0;
+  white-space: pre-line;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #888888;
+  line-height: 1.9;
+}
+.motd-image{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:blur(0px);
+    transform:scale(1.08);
+}
+.motd-box > *:not(.motd-image):not(.motd-overlay){
+    position:relative;
+    z-index:2;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background:url("images/mainbackground.jpg") center/cover no-repeat;
+
+    filter:none;
+    transform:none;
+
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.12);
+
+    z-index:-1;
+    pointer-events:none;
+}
+
+
+
+/* Keep content above the image */
+.timezone-card > *:not(.timezone-image):not(.timezone-overlay){
+    position: relative;
+    z-index: 2;
+}
+/* ---------- Poem Card ---------- */
+
+
+/* Notes button (same style as Spotify/Poem) */
+
+.notes-btn{
+    position: relative;
+    z-index: 1;
+
+    margin-top:auto;
+    margin-bottom:20px;
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.notes-btn:hover{
+    z-index:2;
+
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.28);
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.notes-btn:active{
+    transform:translateY(0);
+    background:rgba(255,255,255,.22);
+}
+
+
+
+.poem-content-card{
+    position:relative;
+    z-index:2;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding-top:24px;
+}
+
+/* White text */
+
+.playlist-poem .playlist-title,
+.playlist-poem .playlist-text{
+    color:#FFFFFF;
+}
+
+.playlist-poem .poem-icon{
+    color:#FFFFFF;
+}
+
+.playlist-poem .playlist-text{
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+}
+
+/* Glass button */
+
+.playlist-poem .playlist-btn{
+
+    margin-top:auto;
+    margin-bottom:20px;
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    transition:all .25s ease;
+}
+
+.playlist-poem .playlist-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+
+    border-color:rgba(255,255,255,.4);
+}
+
+.playlist-poem .playlist-btn:active{
+
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+/* ===== MOTD Close Button ===== */
+
+.motd-close-btn{
+    height:34px;
+    padding:0 18px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.35);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#FFFFFF;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.08),
+        inset 0 1px 0 rgba(255,255,255,.35);
+
+    transition:
+        all .25s ease,
+        transform .12s ease;
+}
+
+/* Hover */
+.motd-close-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+    border:1px solid rgba(255,255,255,.5);
+
+    box-shadow:
+        0 6px 18px rgba(201,143,136,.25),
+        inset 0 1px 0 rgba(255,255,255,.4);
+}
+
+/* Click */
+.motd-close-btn:active{
+
+    transform:scale(.96) translateY(1px);
+}
+/* MOTD footer */
+
+.motd-box .poem-footer{
+    color:rgba(255,255,255,.92);
+
+    text-shadow:0 1px 4px rgba(0,0,0,.35);
+}
+
+.motd-box .poem-date{
+    color:#FFFFFF;
+    font-weight:500;
+}
+/* White outline for all content boxes */
+.featured-box,
+.playlist-card,
+.notes-panel,
+.poem-box{
+    border:1.5px solid rgba(255,255,255,.6);
+}
+.notes-btn:active{
+    transform:translateY(0);
+    background:rgba(255,255,255,.22);
+}
+
+/* Notes card white text */
+.notes-panel .playlist-text{
+    width:160px;
+    margin-top:18px;
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    font-weight:400;
+    line-height:1.35;
+
+    color:#FFFFFF;
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+}
+
+.notes-panel .notes-title{
+    color:#FFFFFF;
+}
+
+.notes-panel .notes-line{
+    background:rgba(255,255,255,.85);
+}
+
+/* ---------- Poem Card ---------- */
+.playlist-poem{
+    position:relative;
+    overflow:hidden;
+    padding:0;
+}
+
+.playlist-card:hover,
+.notes-panel:hover,
+.timezone-card:hover{
+
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+.notes-icon{
+    width:18px;
+    height:18px;
+    flex-shrink:0;
+    color:#FFFFFF;
+}
+.surprise-panel{
+    top: calc(50% + 11px);
+}
+
+.playlist-spotify{
+    position:relative;
+    overflow:hidden;
+    padding:0;
+}
+
+
+
+.playlist-content{
+    position:relative;
+    z-index:2;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding-top:24px;
+}
+
+.playlist-spotify .playlist-title,
+.playlist-spotify .playlist-text{
+    color:#FFFFFF;
+}
+
+.playlist-spotify .music-icon{
+    color:#FFFFFF;
+}
+
+.playlist-spotify .playlist-text{
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+}
+
+.playlist-spotify .playlist-btn{
+    margin-top:auto;
+    margin-bottom:20px;
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:all .25s ease;
+}
+
+.playlist-spotify .playlist-btn:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+
+    border-color:rgba(255,255,255,.4);
+}
+
+.playlist-spotify .playlist-btn:active{
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+.featured-content{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+
+    padding:28px 52px 90px;   /* moved up slightly */
+
+    z-index:2;
+}
+
+.featured-title{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:28px;
+    font-weight:500;
+
+    color:#FFFFFF;
+
+    letter-spacing:.3px;
+}
+
+.featured-line{
+    width:40px;
+    height:1px;
+
+    margin:8px 0 14px;   /* smaller gap */
+
+    background:rgba(255,255,255,.9);
+}
+
+.featured-subtitle{
+    margin-bottom:12px;  /* was 22px */
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:18px;
+    font-weight:500;
+
+    color:#FFFFFF;
+}
+
+.featured-text{
+    max-width:385px;
+
+    margin-top:-6px;     /* moves paragraph upward */
+
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    font-weight:400;
+    line-height:1.8;
+
+    color:rgba(255,255,255,.92);
+
+    text-shadow:0 1px 3px rgba(0,0,0,.28);
+}
+
+/* ===== Work In Progress Box ===== */
+
+.memory-grid{
+    position:absolute;
+    inset:32px;
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+    grid-template-rows:repeat(2,1fr);
+
+    gap:24px;
+}
+
+.memory-slot{
+    width:100%;
+    height:100%;
+
+    min-height:220px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .28s ease;
+
+    cursor:pointer;
+}
+
+.memory-slot:hover{
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+.memory-slot{
+    position:relative;
+    overflow:hidden;
+}
+
+.memory-slot img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    display:block;
+
+    border-radius:inherit;
+
+    transition:transform .35s ease;
+}
+
+.memory-slot:hover img{
+    transform: none;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Updated top bar structure -->
+  <div class="top-bar">
+    <div class="top-left">
+  <div class="logo">
+    <span>A</span>
+    <span class="heart"></span>
+    <span class="A">A</span>
+  </div>
+</div>
+    <!-- Keep the rest of your top-bar content (nav, etc.) as is -->
+    <nav class="nav">
+    <a href="mainpage.html">Home</a>
+    <a href="ourmemoriespage.html" class="active">Our Memories</a>
+    <a href="letterspage.html">Your Letters</a>
+    <a href="aboutpage.html">About</a>
+</nav>
+  </div>
+
+  <div class="content">
+
+    <div class="memory-grid">
+
+    <div class="memory-slot">
+    <img src="images/1image.jpg" alt="Memory 1">
+</div>
+    <div class="memory-slot"></div>
+    <div class="memory-slot"></div>
+    <div class="memory-slot"></div>
+    <div class="memory-slot"></div>
+
+    <div class="memory-slot"></div>
+    <div class="memory-slot"></div>
+    <div class="memory-slot"></div>
+    <div class="memory-slot"></div>
+    <div class="memory-slot"></div>
+
+</div>
+
+</div>
+
+<!-- Bottom Bar -->
+<div class="bottom-bar">
+    <div class="footer-info">
+      <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.14 12.94a7.43 7.43 0 0 0 .05-.94 7.43 7.43 0 0 0-.05-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.28 7.28 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.49.42l-.36 2.54a7.28 7.28 0 0 0-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.48a.5.5 0 0 0 .12.64l2.03 1.58a7.43 7.43 0 0 0-.05.94c0 .32.02.63.05.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.39 1.05.71 1.63.94l.36 2.54a.5.5 0 0 0 .49.42h3.8a.5.5 0 0 0 .49-.42l.36-2.54c.58-.23 1.13-.55 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"/>
+      </svg>
+      <span>Last updated on:</span>
+      <span class="footer-date">20 July 2026</span>
+    </div>
+    <!-- Centered copyright -->
+    <div class="footer-copyright">© Home, But Online. 2026</div>
+
+<div class="footer-right">
+    <span class="footer-for">for my</span>
+    <span class="footer-name">Aarti</span>
+</div>
+
+</div>
+</div>
+
+
+<script>
+function updateAnniversaryCountdown() {
+  const today = new Date();
+  let nextAnniversary = new Date(today.getFullYear(), 3, 27);
+  if (today > nextAnniversary) {
+    nextAnniversary = new Date(today.getFullYear() + 1, 3, 27);
+  }
+  const oneDay = 1000 * 60 * 60 * 24;
+  const daysLeft = Math.ceil((nextAnniversary - today) / oneDay);
+  document.getElementById("anniversaryDays").textContent = `${daysLeft} Day(s)`;
+}
+updateAnniversaryCountdown();
+
+function updateTimes() {
+  const myTime = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Kolkata"
+  });
+  const yourTime = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Africa/Johannesburg"
+  });
+  document.getElementById("myTime").textContent = myTime.toLowerCase();
+  document.getElementById("yourTime").textContent = yourTime.toLowerCase();
+}
+updateTimes();
+setInterval(updateTimes, 1000);
+
+// Spotify button event
+document.getElementById("spotifyBtn").addEventListener("click", function () {
+  window.open("https://open.spotify.com/playlist/0kg3mNa9yFq3A4f76xhyIg", "_blank");
+});
+
+// Skribbl (Poem) popup
+const poemPopup = document.getElementById("poemPopup");
+document.getElementById("skribblBtn").addEventListener("click", () => {
+  poemPopup.classList.add("show");
+});
+document.getElementById("closePoem").addEventListener("click", () => {
+  poemPopup.classList.remove("show");
+});
+poemPopup.addEventListener("click", (e) => {
+  if (e.target === poemPopup) {
+    poemPopup.classList.remove("show");
+  }
+});
+
+// Message popup
+const messagePopup = document.getElementById("messagePopup");
+document.getElementById("messageBtn").addEventListener("click", () => {
+  messagePopup.classList.add("show");
+});
+document.getElementById("closeMessage").addEventListener("click", () => {
+  messagePopup.classList.remove("show");
+});
+messagePopup.addEventListener("click", (e) => {
+  if (e.target === messagePopup) {
+    messagePopup.classList.remove("show");
+  }
+});
+
+// --------- NEW: MOTD Popup Event Listeners ---------
+const motdPopup = document.getElementById("motdPopup");
+document.getElementById("motdBtn").addEventListener("click", () => {
+  motdPopup.classList.add("show");
+});
+document.getElementById("closeMotd").addEventListener("click", () => {
+  motdPopup.classList.remove("show");
+});
+motdPopup.addEventListener("click", (e) => {
+  if (e.target === motdPopup) {
+    motdPopup.classList.remove("show");
+  }
+});
+// --------- Notes Popup ---------
+const notesPopup = document.getElementById("notesPopup");
+
+document.getElementById("notesBtn").addEventListener("click", () => {
+  notesPopup.classList.add("show");
+});
+
+document.getElementById("closeNotes").addEventListener("click", () => {
+  notesPopup.classList.remove("show");
+});
+
+notesPopup.addEventListener("click", (e) => {
+  if (e.target === notesPopup) {
+    notesPopup.classList.remove("show");
+  }
+});
+</script>
+</body>
+</html>
