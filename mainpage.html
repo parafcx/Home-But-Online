@@ -940,6 +940,11 @@ body {
         border-color .25s ease,
         box-shadow .25s ease;
 }
+/* Make Notes popup thinner */
+#notesPopup .poem-box {
+    width: 620px;
+    max-width: 90%;
+}
 
 .poem-box:hover{
 
@@ -1783,6 +1788,24 @@ body::after{
 #messagePopup .poem-content::-webkit-scrollbar-thumb:hover{
     background:rgba(255,255,255,.42);
 }
+/* Notes Popup Points */
+.notes-list {
+    text-align: left;
+    margin: 20px 0 0;
+    padding-left: 25px;
+}
+
+.notes-list li {
+    margin-bottom: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #FFFFFF;
+}
+
+.notes-list li::marker {
+    color: #CC8783;
+}
 </style>
 </head>
 <body>
@@ -2138,7 +2161,18 @@ With lots of hugs and love, from someone who cares.
         </div>
 
         <div class="poem-content">
-</div>
+
+            <h2>Notes</h2>
+
+            <ul class="notes-list">
+                <li>I am still working on a feature where we both can view and add notes for each other. Its hard but I will figure it out.</li>
+                <li>Also you can view the changes or addition I made to this website from the changelog in about tab.</li>
+                <li>I am writing more letter so theres gonna be more for you to read while I am gone.</li>
+                <li>After making this I am gonna take a break for a while, not like abandon this place tho, i will keep updating it so dw.</li>
+                <li>Also if something seems off or broken just refresh the website, and please do let me know about it so I can keep this place as perfect as it can be for you.</li>
+            </ul>
+
+        </div>
 
         <div class="poem-footer">
             <span>Updated on:</span>
