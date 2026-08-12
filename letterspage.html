@@ -1163,39 +1163,247 @@ body::after{
 
     background:rgba(255,255,255,.22);
 }
-/* ===== MOTD Close Button ===== */
+/* ===========================
+   WHEN YOU GET HERE POPUP
+=========================== */
 
-.motd-close-btn{
-    height:34px;
-    padding:0 18px;
+.welcome-popup {
+    position: fixed;
+    inset: 0;
 
-    border-radius:999px;
+    background: rgba(0,0,0,.30);
 
-    background:rgba(255,255,255,.18);
-    border:1px solid rgba(255,255,255,.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:12px;
-    color:#FFFFFF;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 4px 12px rgba(0,0,0,.08),
-        inset 0 1px 0 rgba(255,255,255,.35);
+    opacity: 0;
+    visibility: hidden;
 
     transition:
-        all .25s ease,
-        transform .12s ease;
+        opacity .35s ease,
+        visibility .35s ease;
+
+    z-index: 9999;
 }
 
+.welcome-popup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* ===== Welcome Glass Box ===== */
+
+.welcome-box {
+    width: 720px;
+    max-width: 90%;
+    height: 680px;
+
+    position: relative;
+    overflow: hidden;
+
+    background: rgba(255,255,255,.08);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border: 1.5px solid rgba(255,255,255,.6);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    display: flex;
+    flex-direction: column;
+
+    animation: welcomePopup .35s
+        cubic-bezier(.22,.61,.36,1);
+}
+
+
+/* ===== Opening Animation ===== */
+
+@keyframes welcomePopup {
+
+    from {
+        transform: translateY(25px) scale(.96);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+}
+
+
+/* ===== Header ===== */
+
+.welcome-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    padding: 20px 24px 18px;
+
+    flex-shrink: 0;
+}
+
+
+/* ===== Close Button ===== */
+
+.close-welcome {
+
+    height: 38px;
+
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 8px;
+
+    background: rgba(255,255,255,.18);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    color: #FFFFFF;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    text-shadow:
+        0 1px 4px rgba(0,0,0,.35);
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.close-welcome:hover {
+
+    transform: translateY(-2px);
+
+    background: rgba(255,255,255,.28);
+
+    border-color: rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.close-welcome:active {
+
+    transform: translateY(0);
+
+    background: rgba(255,255,255,.22);
+}
+
+
+/* ===== Content ===== */
+
+.welcome-content {
+
+    flex: 1;
+
+    padding: 20px 70px 40px;
+
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        rgba(255,255,255,.25)
+        transparent;
+}
+
+
+/* ===== Title ===== */
+
+.welcome-content h2 {
+
+    text-align: center;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 26px;
+
+    font-weight: 500;
+
+    color: #FFFFFF;
+
+    letter-spacing: .5px;
+
+    margin-bottom: 34px;
+
+    text-shadow:
+        0 1px 4px rgba(0,0,0,.3);
+}
+
+
+/* ===== Letter Text ===== */
+
+.welcome-content p {
+
+    white-space: pre-line;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 16px;
+
+    font-weight: 400;
+
+    color: rgba(255,255,255,.88);
+
+    line-height: 1.9;
+
+    text-align: center;
+
+    margin: 0;
+
+    text-shadow:
+        0 1px 3px rgba(0,0,0,.25);
+}
+
+
+/* ===== Footer ===== */
+
+.welcome-footer {
+    padding: 22px;
+
+    flex-shrink: 0;
+
+    text-align: center;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+
+    color: rgba(255,255,255,.75);
+
+    border-top: 1px solid rgba(255,255,255,.12);
+
+    text-shadow:
+        0 1px 3px rgba(0,0,0,.25);
+}
+.welcome-date {
+
+    color: #FFFFFF;
+
+    font-weight: 500;
+}
 /* Hover */
 .motd-close-btn:hover{
 
@@ -1642,7 +1850,7 @@ button{
   </div>
 
   <div class="top-quote">
-    "Your hand is cold, mine burns like fire,"
+   
   </div>
 
 </div>
@@ -1660,10 +1868,10 @@ button{
 <div class="letters-grid">
 
     <div class="letter-card first-letter">
-        <h3>When You Get Here</h3>
-        <p>Yeshshsh, you're here! Open this one first, then go explore the rest.</p>
-        <button onclick="return false;">Read Letter</button>
-    </div>
+    <h3>When You Get Here</h3>
+    <p>Open this one first, then go explore the rest.</p>
+    <button id="welcomeLetterBtn">Read Letter</button>
+</div>
 
     <div class="letter-card">
         <h3>When You Miss Me</h3>
@@ -1739,101 +1947,70 @@ button{
 </div>
 </div>
 
+<!-- When You Get Here Popup -->
+
+<div class="welcome-popup" id="welcomePopup">
+
+    <div class="welcome-box">
+
+        <div class="welcome-header">
+            <span class="close-welcome" id="closeWelcome">
+                Close
+            </span>
+        </div>
+
+        <div class="welcome-content">
+
+    <h2></h2>
+
+    <p>
+        <!-- Write your letter here later -->
+    </p>
+
+</div>
+
+        <div class="welcome-footer">
+            Added on:
+            <span class="welcome-date">12 August 2026</span>
+        </div>
+
+    </div>
+
+</div>
+
 
 <script>
-function updateAnniversaryCountdown() {
-  const today = new Date();
-  let nextAnniversary = new Date(today.getFullYear(), 3, 27);
-  if (today > nextAnniversary) {
-    nextAnniversary = new Date(today.getFullYear() + 1, 3, 27);
-  }
-  const oneDay = 1000 * 60 * 60 * 24;
-  const daysLeft = Math.ceil((nextAnniversary - today) / oneDay);
-  document.getElementById("anniversaryDays").textContent = `${daysLeft} Day(s)`;
-}
-updateAnniversaryCountdown();
 
-function updateTimes() {
-  const myTime = new Date().toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-    timeZone: "Asia/Kolkata"
-  });
-  const yourTime = new Date().toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-    timeZone: "Africa/Johannesburg"
-  });
-  document.getElementById("myTime").textContent = myTime.toLowerCase();
-  document.getElementById("yourTime").textContent = yourTime.toLowerCase();
-}
-updateTimes();
-setInterval(updateTimes, 1000);
+// ==============================
+// WHEN YOU GET HERE POPUP
+// ==============================
 
-// Spotify button event
-document.getElementById("spotifyBtn").addEventListener("click", function () {
-  window.open("https://open.spotify.com/playlist/0kg3mNa9yFq3A4f76xhyIg", "_blank");
+const welcomePopup = document.getElementById("welcomePopup");
+const welcomeLetterBtn = document.getElementById("welcomeLetterBtn");
+const closeWelcome = document.getElementById("closeWelcome");
+
+
+// Open popup
+welcomeLetterBtn.addEventListener("click", function () {
+    welcomePopup.classList.add("show");
 });
 
-// Skribbl (Poem) popup
-const poemPopup = document.getElementById("poemPopup");
-document.getElementById("skribblBtn").addEventListener("click", () => {
-  poemPopup.classList.add("show");
-});
-document.getElementById("closePoem").addEventListener("click", () => {
-  poemPopup.classList.remove("show");
-});
-poemPopup.addEventListener("click", (e) => {
-  if (e.target === poemPopup) {
-    poemPopup.classList.remove("show");
-  }
+
+// Close popup
+closeWelcome.addEventListener("click", function () {
+    welcomePopup.classList.remove("show");
 });
 
-// Message popup
-const messagePopup = document.getElementById("messagePopup");
-document.getElementById("messageBtn").addEventListener("click", () => {
-  messagePopup.classList.add("show");
-});
-document.getElementById("closeMessage").addEventListener("click", () => {
-  messagePopup.classList.remove("show");
-});
-messagePopup.addEventListener("click", (e) => {
-  if (e.target === messagePopup) {
-    messagePopup.classList.remove("show");
-  }
+
+// Close when clicking outside the box
+welcomePopup.addEventListener("click", function (e) {
+
+    if (e.target === welcomePopup) {
+        welcomePopup.classList.remove("show");
+    }
+
 });
 
-// --------- NEW: MOTD Popup Event Listeners ---------
-const motdPopup = document.getElementById("motdPopup");
-document.getElementById("motdBtn").addEventListener("click", () => {
-  motdPopup.classList.add("show");
-});
-document.getElementById("closeMotd").addEventListener("click", () => {
-  motdPopup.classList.remove("show");
-});
-motdPopup.addEventListener("click", (e) => {
-  if (e.target === motdPopup) {
-    motdPopup.classList.remove("show");
-  }
-});
-// --------- Notes Popup ---------
-const notesPopup = document.getElementById("notesPopup");
-
-document.getElementById("notesBtn").addEventListener("click", () => {
-  notesPopup.classList.add("show");
-});
-
-document.getElementById("closeNotes").addEventListener("click", () => {
-  notesPopup.classList.remove("show");
-});
-
-notesPopup.addEventListener("click", (e) => {
-  if (e.target === notesPopup) {
-    notesPopup.classList.remove("show");
-  }
-});
 </script>
 </body>
 </html>
