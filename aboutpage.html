@@ -1562,12 +1562,12 @@ body::after{
     margin-top:28px;
 
     width:100%;
-    max-width:none;
+    max-width:850px; /* limits how wide the text can go */
 
     font-family:Arial, Helvetica, sans-serif;
     font-size:15px;
     font-weight:400;
-    line-height:1.9;
+    line-height:1.75;
     letter-spacing:.15px;
 
     color:rgba(255,255,255,.92);
@@ -1594,6 +1594,231 @@ body::after{
     text-shadow:0 1px 3px rgba(0,0,0,.35);
 }
 
+/* ===== Changelog Popup ===== */
+
+.changelog-popup{
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(0,0,0,.45);
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
+
+    z-index:9999;
+}
+
+.changelog-popup.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.changelog-box{
+    width:560px;
+    max-width:90%;
+    height:560px;
+
+    position:relative;
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1.5px solid rgba(255,255,255,.6);
+    border-radius:12px;
+
+    box-shadow:
+        0 18px 50px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.2);
+
+    display:flex;
+    flex-direction:column;
+
+    animation:changelogPopup .25s ease;
+}
+
+@keyframes changelogPopup{
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.changelog-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:24px 28px 18px;
+
+    border-bottom:1px solid rgba(255,255,255,.18);
+}
+
+.changelog-title{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:22px;
+    font-weight:500;
+
+    color:#FFFFFF;
+}
+
+.changelog-close{
+    width:78px;
+    height:36px;
+    padding:0;
+
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.35);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:13px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.08),
+        inset 0 1px 0 rgba(255,255,255,.25);
+
+    transition:
+        transform .25s cubic-bezier(.22,.61,.36,1),
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.changelog-close:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+    border-color:rgba(255,255,255,.55);
+
+    box-shadow:
+        0 7px 18px rgba(0,0,0,.14),
+        0 0 0 1px rgba(255,255,255,.12),
+        inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+.changelog-close:active{
+    transform:translateY(0) scale(.96);
+
+    background:rgba(255,255,255,.22);
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,.12),
+        inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+.changelog-content{
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:26px 30px 30px;
+}
+
+/* Scrollbar */
+
+.changelog-content::-webkit-scrollbar{
+    width:5px;
+}
+
+.changelog-content::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+.changelog-content::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.3);
+    border-radius:999px;
+}
+
+/* Individual update */
+
+.changelog-entry{
+    padding:18px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.14);
+}
+
+.changelog-entry:first-child{
+    padding-top:0;
+}
+
+.changelog-entry:last-child{
+    border-bottom:none;
+}
+
+.changelog-version{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    font-weight:500;
+
+    color:#FFFFFF;
+}
+
+.changelog-badge{
+    padding:4px 9px;
+
+    border-radius:999px;
+
+    background:rgba(201,138,138,.25);
+    border:1px solid rgba(255,255,255,.2);
+
+    font-size:11px;
+    font-weight:500;
+
+    color:#FFFFFF;
+}
+
+.changelog-date{
+    margin-top:6px;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+
+    color:rgba(255,255,255,.55);
+}
+
+.changelog-description{
+    margin-top:10px;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:400;
+
+    line-height:1.7;
+
+    color:rgba(255,255,255,.82);
+}
 </style>
 </head>
 <body>
@@ -1623,27 +1848,13 @@ body::after{
         <div class="about-big-box">
     <div class="featured-content">
 
-        <h1 class="featured-title">About Home, But Online</h1>
+        <h1 class="featured-title">About - Home, But Online.</h1>
 
         <div class="about-letter">
 
-            <p class="about-greeting">About - Home, But Online.</p>
+    <p>This website was made just for two people, to unite them even with the distance between them. It follows their story through some very exhausting days to some very exciting days. The main motive was to make a place where they both can spend their time rather than being stuck with the same boring days. This place will never be finished, as their journey has just begun. Soon, it’s going to be home to hundreds and thousands of stories, plans, and memories. It will be constantly monitored and updated throughout; old things will get better, and new things will be added to make their experience as good as it can be. A lot of effort was given to make this place possible. Thousands of lines of code, hundreds of art styles, and tens of videos have contributed to this little place on the internet that they call home.</p>
 
-            <p>I don't really know where to start, but first of all, I want to say that this place was made just for you.</p>
-
-            <p>Every page, every design, and every little detail was created with you in mind. I don't know if you'll like it, but I truly gave it my all. I spent hours watching YouTube videos, learning how to make different features work and figuring out how to code the designs I imagined. It definitely isn't perfect, but I wanted to make something that was ours, a little place you could always come back to.</p>
-
-            <p>You might be wondering why I'm giving you this when it isn't your birthday or our anniversary. The truth is, I don't need a special occasion to remind you how much you mean to me. I don't need a reason to love you or to try to make you smile.</p>
-
-            <p>This website will never really be finished. I'll keep working on it, adding new things, improving old ones, and filling it with more memories as time goes on. I wish that every time you visit, it feels a little more like home.</p>
-
-            <p>I really hope you enjoy your stay here and I love you so much.</p>
-
-            <p>— Yours</p>
-
-            <p>— Yours</p>
-
-        </div>
+</div>
 
     </div>
 </div>
@@ -1654,28 +1865,34 @@ body::after{
         <div class="playlist-content">
 
             <div class="playlist-title">
-                <svg class="notes-icon" viewBox="0 0 24 24" fill="none">
-                    <path d="M7 3h7l5 5v13H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
-                          stroke="currentColor"
-                          stroke-width="1.8"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path d="M14 3v5h5"
-                          stroke="currentColor"
-                          stroke-width="1.8"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path d="M10 13h6M10 17h4"
-                          stroke="currentColor"
-                          stroke-width="1.8"
-                          stroke-linecap="round"/>
-                </svg>
+    <svg class="notes-icon" viewBox="0 0 24 24" fill="none">
+        <path d="M20 11a8 8 0 0 0-14.9-3.9L4 9"
+              stroke="currentColor"
+              stroke-width="1.35"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+        <path d="M4 5v4h4"
+              stroke="currentColor"
+              stroke-width="1.35"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+        <path d="M4 13a8 8 0 0 0 14.9 3.9L20 15"
+              stroke="currentColor"
+              stroke-width="1.35"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+        <path d="M20 19v-4h-4"
+              stroke="currentColor"
+              stroke-width="1.35"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+    </svg>
 
-                <span>Changelog</span>
-            </div>
+    <span>Changelog</span>
+</div>
 
             <div class="playlist-text">
-                What's changed recently.
+                Take a look at what I’ve changed recently.
             </div>
 
             <button class="notes-btn" id="notesBtn">
@@ -1689,11 +1906,11 @@ body::after{
     <div class="playlist-content">
 
         <div class="playlist-text" style="margin-top:0;">
-            Version: 0.00.27
+            Version: 0.01.10
         </div>
 
         <div class="playlist-text" style="margin-top:10px;">
-    Build: Testing
+    Build: Release
 </div>
 
 <div class="playlist-text" style="margin-top:10px;">
@@ -1720,7 +1937,7 @@ body::after{
         <path d="M19.14 12.94a7.43 7.43 0 0 0 .05-.94 7.43 7.43 0 0 0-.05-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.28 7.28 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.49.42l-.36 2.54a7.28 7.28 0 0 0-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.48a.5.5 0 0 0 .12.64l2.03 1.58a7.43 7.43 0 0 0-.05.94c0 .32.02.63.05.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.39 1.05.71 1.63.94l.36 2.54a.5.5 0 0 0 .49.42h3.8a.5.5 0 0 0 .49-.42l.36-2.54c.58-.23 1.13-.55 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"/>
       </svg>
       <span>Last updated on:</span>
-      <span class="footer-date">26 July 2026</span>
+      <span class="footer-date">14 August 2026</span>
     </div>
     <!-- Centered copyright -->
     <div class="footer-copyright">© Home, But Online. 2026</div>
@@ -1731,6 +1948,77 @@ body::after{
 </div>
 
 </div>
+</div>
+
+
+<!-- Changelog Popup -->
+<div class="changelog-popup" id="notesPopup">
+
+    <div class="changelog-box">
+
+        <div class="changelog-header">
+
+            <div class="changelog-title">
+                Changelog
+            </div>
+
+            <button class="changelog-close" id="closeNotes">
+                Close
+            </button>
+
+        </div>
+
+        <div class="changelog-content">
+
+            <div class="changelog-entry">
+                <div class="changelog-version">
+                    Version 0.01.10
+                    <span class="changelog-badge">Latest</span>
+                </div>
+
+                <div class="changelog-date">
+                    14 August 2026
+                </div>
+
+                <div class="changelog-description">
+                    Updated the About tab, fixed several UI elements, refined the icons, and improved the background blur.
+                </div>
+            </div>
+
+            <div class="changelog-entry">
+                <div class="changelog-version">
+                    Version 0.01.09
+                </div>
+
+                <div class="changelog-date">
+                    08 August 2026
+                </div>
+
+                <div class="changelog-description">
+                    Aligned the elements, added new styles, refined the UI, and fixed several bugs.
+
+                </div>
+            </div>
+
+            <div class="changelog-entry">
+                <div class="changelog-version">
+                    Version 0.01.08
+                </div>
+
+                <div class="changelog-date">
+                    06 August 2026
+                </div>
+
+                <div class="changelog-description">
+                    Changed the overall art style of the website, refined the main page UI, and added the Letters section.
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 
