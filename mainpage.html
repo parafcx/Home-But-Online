@@ -1806,6 +1806,214 @@ body::after{
 .notes-list li::marker {
     color: #CC8783;
 }
+
+/* ===== To-Do List Popup ===== */
+
+#todoPopup {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,.30);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease;
+
+    z-index: 9999;
+}
+
+#todoPopup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.todo-box {
+    width: 620px;
+    max-width: 90%;
+    height: 680px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background: rgba(255,255,255,.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border: 1.5px solid rgba(255,255,255,.6);
+    border-radius: 12px;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+
+    animation: popup .35s cubic-bezier(.22,.61,.36,1);
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 24px 28px 18px;
+
+    border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.todo-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+.todo-close {
+    height: 38px;
+    padding: 0 18px;
+
+    border-radius: 8px;
+
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.28);
+
+    backdrop-filter: blur(10px);
+
+    color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: all .25s ease;
+}
+
+.todo-close:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,.28);
+    border-color: rgba(255,255,255,.4);
+}
+
+.todo-content {
+    flex: 1;
+    padding: 28px;
+
+    overflow-y: auto;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FFFFFF;
+}
+
+.todo-input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.todo-input {
+    flex: 1;
+    height: 44px;
+
+    padding: 0 14px;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.28);
+
+    background: rgba(255,255,255,.12);
+    backdrop-filter: blur(10px);
+
+    color: #FFFFFF;
+    outline: none;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.todo-input::placeholder {
+    color: rgba(255,255,255,.55);
+}
+
+.todo-add {
+    width: 90px;
+    height: 44px;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.28);
+
+    background: rgba(255,255,255,.18);
+    color: #FFFFFF;
+
+    cursor: pointer;
+
+    transition: all .25s ease;
+}
+
+.todo-add:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,.28);
+}
+
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.todo-item {
+    min-height: 52px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 10px 14px;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.18);
+
+    background: rgba(255,255,255,.08);
+}
+
+.todo-check {
+    width: 18px;
+    height: 18px;
+    accent-color: #CC8783;
+    cursor: pointer;
+}
+
+.todo-text {
+    flex: 1;
+    font-size: 14px;
+    color: #FFFFFF;
+}
+
+.todo-item.done .todo-text {
+    text-decoration: line-through;
+    opacity: .5;
+}
+
+.todo-delete {
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,.55);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.todo-delete:hover {
+    color: #FFFFFF;
+}
 </style>
 </head>
 <body>
@@ -2184,7 +2392,214 @@ With lots of hugs and love, from someone who cares.
 </div>
 
 </div>
+<!-- ===== To-Do List Popup ===== -->
+
+<div class="poem-popup" id="todoPopup">
+
+    <div class="todo-box">
+
+        <div class="todo-header">
+
+            <div class="todo-title">
+                Our To-Do List
+            </div>
+
+            <button class="todo-close" id="todoClose">
+                Close
+            </button>
+
+        </div>
+
+        <div class="todo-content">
+
+            <div class="todo-input-row">
+
+                <input
+                    type="text"
+                    id="todoInput"
+                    class="todo-input"
+                    placeholder="Add something we should do..."
+                >
+
+                <button class="todo-add" id="todoAdd">
+                    Add
+                </button>
+
+            </div>
+
+            <div class="todo-list" id="todoList"></div>
+
+        </div>
+
+    </div>
+
+</div>
 <script>
+/* ===== To-Do List Popup ===== */
+
+const todoBtn = document.getElementById("todoBtn");
+const todoPopup = document.getElementById("todoPopup");
+const todoClose = document.getElementById("todoClose");
+const todoInput = document.getElementById("todoInput");
+const todoAdd = document.getElementById("todoAdd");
+const todoList = document.getElementById("todoList");
+
+/* Local storage key */
+const TODO_STORAGE_KEY = "homeButOnlineTodos";
+
+
+/* ===== OPEN / CLOSE POPUP ===== */
+
+todoBtn.addEventListener("click", () => {
+    todoPopup.classList.add("show");
+});
+
+todoClose.addEventListener("click", () => {
+    todoPopup.classList.remove("show");
+});
+
+todoPopup.addEventListener("click", (e) => {
+    if (e.target === todoPopup) {
+        todoPopup.classList.remove("show");
+    }
+});
+
+
+/* ===== SAVE TODOS ===== */
+
+function saveTodos() {
+
+    const todos = [];
+
+    document.querySelectorAll(".todo-item").forEach(item => {
+
+        todos.push({
+            text: item.querySelector(".todo-text").textContent,
+            done: item.querySelector(".todo-check").checked
+        });
+
+    });
+
+    localStorage.setItem(
+        TODO_STORAGE_KEY,
+        JSON.stringify(todos)
+    );
+}
+
+
+/* ===== CREATE TODO ===== */
+
+function createTodo(text, done = false) {
+
+    const item = document.createElement("div");
+
+    item.className = "todo-item";
+
+    item.innerHTML = `
+        <input type="checkbox" class="todo-check">
+
+        <span class="todo-text"></span>
+
+        <button class="todo-delete">×</button>
+    `;
+
+    item.querySelector(".todo-text").textContent = text;
+
+
+    /* Restore completed status */
+
+    const checkbox = item.querySelector(".todo-check");
+
+    checkbox.checked = done;
+
+    if (done) {
+        item.classList.add("done");
+    }
+
+
+    /* Tick / Untick */
+
+    checkbox.addEventListener("change", function () {
+
+        item.classList.toggle("done", this.checked);
+
+        saveTodos();
+
+    });
+
+
+    /* Delete */
+
+    item.querySelector(".todo-delete").addEventListener("click", () => {
+
+        item.remove();
+
+        saveTodos();
+
+    });
+
+
+    todoList.appendChild(item);
+}
+
+
+/* ===== ADD TODO ===== */
+
+function addTodo() {
+
+    const text = todoInput.value.trim();
+
+    if (!text) return;
+
+    createTodo(text);
+
+    saveTodos();
+
+    todoInput.value = "";
+
+    todoInput.focus();
+}
+
+
+/* ===== ADD BUTTON ===== */
+
+todoAdd.addEventListener("click", addTodo);
+
+
+/* ===== ENTER KEY ===== */
+
+todoInput.addEventListener("keydown", (e) => {
+
+    if (e.key === "Enter") {
+        addTodo();
+    }
+
+});
+
+
+/* ===== LOAD SAVED TODOS ===== */
+
+function loadTodos() {
+
+    const savedTodos = JSON.parse(
+        localStorage.getItem(TODO_STORAGE_KEY)
+    ) || [];
+
+    savedTodos.forEach(todo => {
+
+        createTodo(
+            todo.text,
+            todo.done
+        );
+
+    });
+
+}
+
+
+/* Load saved tasks when website opens */
+
+loadTodos();
 function updateAnniversaryCountdown() {
   const today = new Date();
   let nextAnniversary = new Date(today.getFullYear(), 3, 27);
