@@ -46,8 +46,8 @@
 
     color:#FFFFFF;
     font-family:Arial, Helvetica, sans-serif;
-    font-size:10px;
-font-weight:400;
+    font-size:14px;
+    font-weight:500;
 
     cursor:pointer;
     white-space:nowrap;
@@ -959,14 +959,14 @@ body {
     }
 
 }
-.poems-header{
+.poem-header{
+
     display:flex;
-    justify-content:space-between;
+    justify-content:flex-end;
     align-items:center;
 
-    padding:24px 28px 18px;
+    padding:24px 28px 12px;
 
-    border-bottom:1px solid rgba(255,255,255,.12);
 }
 .close-poem{
 
@@ -2185,183 +2185,6 @@ body::after{
 .todo-content::-webkit-scrollbar-thumb:hover {
     background: rgba(255,255,255,.42);
 }
-/* ===== Poems Library ===== */
-
-.poems-library-box{
-    width:620px;
-    max-width:90%;
-    height:680px;
-}
-
-.poems-library-content{
-    flex:1;
-
-    padding:28px;
-
-    overflow-y:auto;
-    overflow-x:hidden;
-
-    font-family:Arial, Helvetica, sans-serif;
-    color:#FFFFFF;
-
-    scrollbar-width:thin;
-    scrollbar-color:rgba(255,255,255,.28) transparent;
-}
-
-.poems-library-content::-webkit-scrollbar{
-    width:4px;
-}
-
-.poems-library-content::-webkit-scrollbar-track{
-    background:transparent;
-}
-
-.poems-library-content::-webkit-scrollbar-thumb{
-    background:rgba(255,255,255,.28);
-    border-radius:999px;
-}
-
-.poems-library-content::-webkit-scrollbar-thumb:hover{
-    background:rgba(255,255,255,.42);
-}
-
-.poems-library-title{
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:22px;
-    font-weight:500;
-    color:#FFFFFF;
-
-    margin:0;
-}
-
-
-.poems-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.poem-item{
-    min-height:58px;
-
-    display:flex;
-    align-items:center;
-
-    gap:12px;
-
-    padding:10px 14px;
-
-    border-radius:8px;
-
-    border:1px solid rgba(255,255,255,.18);
-
-    background:rgba(255,255,255,.08);
-
-    transition:
-        background .25s ease,
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
-}
-
-.poem-item:hover{
-    background:rgba(255,255,255,.12);
-
-    transform:translateY(-1px);
-
-    border-color:rgba(255,255,255,.28);
-}
-
-.poem-item-info{
-    display:flex;
-    align-items:center;
-
-    gap:12px;
-
-    flex:1;
-
-    min-width:0;
-}
-
-.poem-item-number{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    width:28px;
-    height:28px;
-
-    border-radius:7px;
-
-    background:rgba(201,138,138,.14);
-
-    color:#C98A8A;
-
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:11px;
-    font-weight:600;
-
-    flex-shrink:0;
-}
-
-.poem-item-name{
-    flex:1;
-
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:14px;
-    font-weight:400;
-
-    color:#FFFFFF;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.poem-read-btn{
-    width:72px;
-    height:34px;
-
-    flex-shrink:0;
-
-    border-radius:8px;
-
-    border:1px solid rgba(255,255,255,.28);
-
-    background:rgba(255,255,255,.18);
-
-    color:#FFFFFF;
-
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:12px;
-    font-weight:500;
-
-    cursor:pointer;
-
-    transition:
-        background .25s ease,
-        border-color .25s ease,
-        transform .25s ease,
-        box-shadow .25s ease;
-}
-
-.poem-read-btn:hover{
-    transform:translateY(-2px);
-
-    background:rgba(255,255,255,.28);
-
-    border-color:rgba(255,255,255,.4);
-
-    box-shadow:
-        0 6px 18px rgba(201,138,138,.18);
-}
-
-.poem-read-btn:active{
-    transform:translateY(0);
-
-    background:rgba(255,255,255,.22);
-}
-
 
 </style>
 </head>
@@ -2628,77 +2451,18 @@ body::after{
 
 <!-- Poem Popup -->
 <div class="poem-popup" id="poemPopup">
-  <div class="poem-box poems-library-box">
-
-    <div class="poem-header poems-header">
-  <div class="poems-library-title">Poems For You</div>
-
-  <span class="close-poem" id="closePoem">Close</span>
-</div>
-
-<div class="poems-library-content">
-
-      <div class="poems-list">
-
-        <div class="poem-item">
-          <div class="poem-item-info">
-            <span class="poem-item-number">01</span>
-            <span class="poem-item-name">Poem One</span>
-          </div>
-
-          <button class="poem-read-btn">
-            Read
-          </button>
-        </div>
-
-        <div class="poem-item">
-          <div class="poem-item-info">
-            <span class="poem-item-number">02</span>
-            <span class="poem-item-name">Poem Two</span>
-          </div>
-
-          <button class="poem-read-btn">
-            Read
-          </button>
-        </div>
-
-        <div class="poem-item">
-          <div class="poem-item-info">
-            <span class="poem-item-number">03</span>
-            <span class="poem-item-name">Poem Three</span>
-          </div>
-
-          <button class="poem-read-btn">
-            Read
-          </button>
-        </div>
-
-        <div class="poem-item">
-          <div class="poem-item-info">
-            <span class="poem-item-number">04</span>
-            <span class="poem-item-name">Poem Four</span>
-          </div>
-
-          <button class="poem-read-btn">
-            Read
-          </button>
-        </div>
-
-        <div class="poem-item">
-          <div class="poem-item-info">
-            <span class="poem-item-number">05</span>
-            <span class="poem-item-name">Poem Five</span>
-          </div>
-
-          <button class="poem-read-btn">
-            Read
-          </button>
-        </div>
-
-      </div>
-
+  <div class="poem-box">
+    <div class="poem-header">
+      <span class="close-poem" id="closePoem">Close</span>
     </div>
-
+    <div class="poem-content">
+      <h2>Poem Title</h2>
+      <p>Nothing to see here yet.</p>
+    </div>
+    <div class="poem-footer">
+      <span>Added on:</span>
+      <span class="poem-date">30 June 2026</span>
+    </div>
   </div>
 </div>
 
