@@ -2059,11 +2059,11 @@ body::after{
     appearance: none;
     -webkit-appearance: none;
 
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
 
     border: 1.5px solid rgba(255,255,255,.45);
-    border-radius: 4px; /* square */
+    border-radius: 5px;
 
     background: transparent;
 
@@ -2074,11 +2074,15 @@ body::after{
 
     flex-shrink: 0;
 
-    transition: all .2s ease;
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
 }
+
 .todo-check:hover {
     border-color: #C98A8A;
-    transform: scale(1.08);
+    transform: scale(1.06);
 }
 
 .todo-check:checked {
@@ -2089,17 +2093,39 @@ body::after{
 .todo-check:checked::after {
     content: "";
 
-    width: 7px;
-    height: 11px;
+    width: 5px;
+    height: 9px;
 
-    border-right: 2px solid #FFFFFF;
-    border-bottom: 2px solid #FFFFFF;
+    border-right: 2.5px solid #FFFFFF;
+    border-bottom: 2.5px solid #FFFFFF;
 
     transform: rotate(45deg) translate(-1px, -1px);
 
     display: block;
 }
+/* ===== To-Do List Custom Scrollbar ===== */
 
+.todo-content {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.28) transparent;
+}
+
+.todo-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.todo-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.todo-content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.28);
+    border-radius: 999px;
+}
+
+.todo-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,.42);
+}
 
 </style>
 </head>
