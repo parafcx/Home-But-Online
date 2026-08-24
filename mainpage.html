@@ -2622,7 +2622,51 @@ With lots of hugs and love, from someone who cares.
     </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+// --------- Supabase Settings ---------
+
+const SUPABASE_URL =
+    "https://iwozkjemthpdxhlcxurc.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_vrnfG5ecaVlbC5ilbFJaQQ_HETZ7KM2";
+
+
+// --------- Supabase Client ---------
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+// --------- Supabase Connection Test ---------
+
+supabaseClient
+    .from("todos")
+    .select("*")
+    .limit(1)
+    .then(({ data, error }) => {
+
+        if (error) {
+            console.error(
+                "Supabase test failed:",
+                error
+            );
+        } else {
+            console.log(
+                "Supabase connected successfully:",
+                data
+            );
+        }
+
+    });
+
+
 // --------- Today's Message Heart ---------
 
 const motdHeart = document.getElementById("motdHeart");
@@ -2719,14 +2763,19 @@ function createTodo(
     text,
     done = false,
     addedDate = new Date().toISOString(),
-    completedDate = null
+    completedDate = null,
+    todoId = null
 ) {
 
     const item = document.createElement("div");
 
     item.className = "todo-item";
 
-    /* Store dates on the task itself */
+if (todoId !== null && todoId !== undefined) {
+    item.dataset.id = String(todoId);
+}
+
+/* Store dates on the task itself */
     item.dataset.addedDate = addedDate;
 
     if (completedDate) {
@@ -2791,49 +2840,115 @@ function createTodo(
     }
 
 
-    /* Tick / Untick */
+    /* ===== Tick / Untick ===== */
 
-    checkbox.addEventListener("change", function () {
+checkbox.addEventListener("change", async function () {
 
-        item.classList.toggle("done", this.checked);
+    const isDone = this.checked;
 
-        if (this.checked) {
+    let completedDate = null;
 
-            const completed = new Date().toISOString();
+    if (isDone) {
+        completedDate = new Date().toISOString();
+    }
 
-            item.dataset.completedDate = completed;
 
-            dateElement.textContent =
-                `Added ${formatDate(item.dataset.addedDate)} · Completed ${formatDate(completed)}`;
+    /* Update the UI immediately */
 
-            dateElement.classList.add("completed");
+    item.classList.toggle(
+        "done",
+        isDone
+    );
 
-        } else {
 
-            delete item.dataset.completedDate;
+    if (completedDate) {
 
-            dateElement.textContent =
-                `Added ${formatDate(item.dataset.addedDate)}`;
+        item.dataset.completedDate =
+            completedDate;
 
-            dateElement.classList.remove("completed");
-        }
+        dateElement.textContent =
+            `Added ${formatDate(item.dataset.addedDate)} · Completed ${formatDate(completedDate)}`;
 
-        saveTodos();
-        updateTodoProgress();
+        dateElement.classList.add("completed");
 
-    });
+    } else {
+
+        delete item.dataset.completedDate;
+
+        dateElement.textContent =
+            `Added ${formatDate(item.dataset.addedDate)}`;
+
+        dateElement.classList.remove("completed");
+    }
+
+
+    updateTodoProgress();
+
+
+    /* Save the change to Supabase */
+
+    const {
+        error
+    } = await supabaseClient
+        .from("todos")
+        .update({
+            done: isDone,
+            completed_date: completedDate
+        })
+        .eq("id", item.dataset.id);
+
+
+    if (error) {
+
+        console.error(
+            "Failed to update todo:",
+            error
+        );
+
+        alert(
+            "Couldn't update the task."
+        );
+
+        return;
+    }
+
+});
 
 
     /* Delete */
 
-    item.querySelector(".todo-delete").addEventListener("click", () => {
+item.querySelector(".todo-delete").addEventListener("click", async () => {
 
-        item.remove();
+    const todoId = item.dataset.id;
 
-        saveTodos();
-        updateTodoProgress();
+    if (!todoId) {
+        console.error("Cannot delete todo: missing ID");
+        return;
+    }
 
-    });
+    const { error } = await supabaseClient
+        .from("todos")
+        .delete()
+        .eq("id", todoId);
+
+    if (error) {
+
+        console.error(
+            "Failed to delete todo:",
+            error
+        );
+
+        alert("Couldn't delete the task.");
+
+        return;
+    }
+
+    /* Remove from the page only after Supabase confirms deletion */
+    item.remove();
+
+    updateTodoProgress();
+
+});
 
 
     todoList.appendChild(item);
@@ -2844,26 +2959,68 @@ function createTodo(
 
 /* ===== ADD TODO ===== */
 
-function addTodo() {
+async function addTodo() {
 
     const text = todoInput.value.trim();
 
     if (!text) return;
 
-    /* Create task with current date */
-    createTodo(
-        text,
-        false,
-        new Date().toISOString()
-    );
 
-    saveTodos();
+    /* Temporarily prevent double-clicks */
+
+    todoAdd.disabled = true;
+
+
+    /* Add task to Supabase */
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("todos")
+        .insert({
+            text: text,
+            done: false
+        })
+        .select()
+        .single();
+
+
+    todoAdd.disabled = false;
+
+
+    /* Show error if Supabase rejected it */
+
+    if (error) {
+
+        console.error(
+            "Failed to add todo:",
+            error
+        );
+
+        alert(
+            "Couldn't add the task."
+        );
+
+        return;
+    }
+
+
+    /* Display the newly created task */
+
+        createTodo(
+    data.text,
+    data.done,
+    data.added_date || new Date().toISOString(),
+    data.completed_date || null,
+    data.id
+);
+
 
     todoInput.value = "";
 
     todoInput.focus();
 }
-
 
 /* ===== ADD BUTTON ===== */
 
@@ -2881,28 +3038,45 @@ todoInput.addEventListener("keydown", (e) => {
 });
 
 
-/* ===== LOAD SAVED TODOS ===== */
+/* ===== LOAD TODOS FROM SUPABASE ===== */
 
-function loadTodos() {
+async function loadTodos() {
 
-    const savedTodos = JSON.parse(
-        localStorage.getItem(TODO_STORAGE_KEY)
-    ) || [];
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("todos")
+        .select("*")
+        .order("added_date", {
+            ascending: true
+        });
 
-    savedTodos.forEach(todo => {
+    if (error) {
 
-        createTodo(
-            todo.text,
-            todo.done,
-            todo.addedDate || new Date().toISOString(),
-            todo.completedDate || null
+        console.error(
+            "Failed to load todos:",
+            error
         );
 
-    });
+        return;
+    }
+
+    data.forEach(todo => {
+
+    createTodo(
+        todo.text,
+        todo.done,
+        todo.added_date || new Date().toISOString(),
+        todo.completed_date || null,
+        todo.id
+    );
+
+});
 }
 
 
-/* Load saved tasks when website opens */
+/* Load shared tasks when website opens */
 
 loadTodos();
 function updateAnniversaryCountdown() {
