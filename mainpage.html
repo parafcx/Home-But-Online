@@ -946,20 +946,6 @@ body {
     max-width: 90%;
 }
 
-.poem-box:hover{
-
-    background:rgba(255,255,255,.12);
-
-    border-color:#fff;
-
-    box-shadow:
-        0 18px 40px rgba(0,0,0,.22),
-        0 0 0 1px rgba(255,255,255,.22),
-        inset 0 1px 0 rgba(255,255,255,.22),
-        0 0 24px rgba(255,255,255,.08),
-        0 0 40px rgba(201,138,138,.12);
-
-}
 @keyframes popup{
 
     from{
@@ -1406,6 +1392,91 @@ body::after{
     color:#FFFFFF;
     font-weight:500;
 }
+
+/* ===== Today's Message Heart ===== */
+
+.motd-heart-wrap{
+    position:absolute;
+
+    right:28px;
+    bottom:22px;
+
+    width:18px;
+    height:18px;
+
+    z-index:5;
+}
+.motd-heart{
+    width:18px;
+    height:18px;
+
+    position:relative;
+
+    border:none;
+    background:#C98A8A;
+
+    transform:rotate(-45deg);
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.motd-heart::before,
+.motd-heart::after{
+    content:"";
+
+    position:absolute;
+
+    width:18px;
+    height:18px;
+
+    background:#C98A8A;
+
+    border-radius:50%;
+}
+
+.motd-heart::before{
+    top:-9px;
+    left:0;
+}
+
+.motd-heart::after{
+    top:0;
+    left:9px;
+}
+
+.motd-heart:hover{
+    transform:rotate(-45deg) scale(1.08);
+}
+
+.motd-heart:active{
+    transform:rotate(-45deg) scale(.88);
+}
+
+.motd-heart.liked{
+    background:#C98A8A;
+    animation:heartPop .35s cubic-bezier(.22,.61,.36,1);
+}
+
+@keyframes heartPop{
+
+    0%{
+        transform:scale(.8);
+    }
+
+    55%{
+        transform:scale(1.2);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
 /* White outline for all content boxes */
 .featured-box,
 .playlist-card,
@@ -1747,18 +1818,6 @@ body::after{
         background .25s ease;
 }
 
-.poem-box:hover{
-    transform:translateY(-2px);
-
-    background:rgba(255,255,255,.12);
-
-    border-color:#fff;
-
-    box-shadow:
-        0 18px 40px rgba(0,0,0,.22),
-        0 0 0 1px rgba(255,255,255,.22),
-        inset 0 1px 0 rgba(255,255,255,.22);
-}
 
 #messagePopup .poem-content{
     overflow-y:auto;
@@ -2467,7 +2526,15 @@ With lots of hugs and love, from someone who cares.
     </p>
 </div>
 
-<div class="poem-footer"></div>
+<div class="motd-heart-wrap">
+    <button
+        class="motd-heart"
+        id="motdHeart"
+        type="button"
+        aria-label="Heart today's message"
+        aria-pressed="false"
+    >♡</button>
+</div>
   </div>
 </div>
 <!-- Notes Popup -->
@@ -2556,6 +2623,39 @@ With lots of hugs and love, from someone who cares.
 
 </div>
 <script>
+// --------- Today's Message Heart ---------
+
+const motdHeart = document.getElementById("motdHeart");
+const MOTD_HEART_KEY = "homeButOnlineMotdHeart";
+
+// Load saved heart state
+const savedMotdHeart =
+    localStorage.getItem(MOTD_HEART_KEY) === "true";
+
+if (savedMotdHeart) {
+    motdHeart.classList.add("liked");
+    motdHeart.textContent = "♥";
+    motdHeart.setAttribute("aria-pressed", "true");
+}
+
+// Heart button
+motdHeart.addEventListener("click", () => {
+
+    const liked = motdHeart.classList.toggle("liked");
+
+    motdHeart.textContent = liked ? "♥" : "♡";
+
+    motdHeart.setAttribute(
+        "aria-pressed",
+        liked ? "true" : "false"
+    );
+
+    localStorage.setItem(
+        MOTD_HEART_KEY,
+        liked
+    );
+
+});
 /* ===== To-Do List Popup ===== */
 
 const todoBtn = document.getElementById("todoBtn");
