@@ -1971,7 +1971,7 @@ body::after{
 }
 
 .todo-item {
-    min-height: 52px;
+    min-height: 58px;
 
     display: flex;
     align-items: center;
@@ -1983,13 +1983,13 @@ body::after{
     border: 1px solid rgba(255,255,255,.18);
 
     background: rgba(255,255,255,.08);
+
+    transition: all .25s ease;
 }
 
-.todo-check {
-    width: 18px;
-    height: 18px;
-    accent-color: #CC8783;
-    cursor: pointer;
+.todo-item:hover {
+    background: rgba(255,255,255,.12);
+    transform: translateY(-1px);
 }
 
 .todo-text {
@@ -1998,9 +1998,25 @@ body::after{
     color: #FFFFFF;
 }
 
+.todo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+}
+
 .todo-item.done .todo-text {
     text-decoration: line-through;
     opacity: .5;
+}
+
+.todo-date {
+    font-size: 11px;
+    color: rgba(255,255,255,.45);
+}
+
+.todo-date.completed {
+    color: rgba(201,138,138,.8);
 }
 
 .todo-delete {
@@ -2014,6 +2030,77 @@ body::after{
 .todo-delete:hover {
     color: #FFFFFF;
 }
+.todo-progress {
+    margin-bottom: 14px;
+}
+
+#todoProgressText {
+    display: block;
+    font-size: 12px;
+    color: rgba(255,255,255,.55);
+    margin-bottom: 7px;
+}
+
+.todo-progress-bar {
+    width: 100%;
+    height: 3px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.1);
+    overflow: hidden;
+}
+
+#todoProgressFill {
+    width: 0%;
+    height: 100%;
+    background: #C98A8A;
+    transition: width .35s ease;
+}
+.todo-check {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 20px;
+    height: 20px;
+
+    border: 1.5px solid rgba(255,255,255,.45);
+    border-radius: 4px; /* square */
+
+    background: transparent;
+
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    transition: all .2s ease;
+}
+.todo-check:hover {
+    border-color: #C98A8A;
+    transform: scale(1.08);
+}
+
+.todo-check:checked {
+    background: #C98A8A;
+    border-color: #C98A8A;
+}
+
+.todo-check:checked::after {
+    content: "";
+
+    width: 7px;
+    height: 11px;
+
+    border-right: 2px solid #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+
+    transform: rotate(45deg) translate(-1px, -1px);
+
+    display: block;
+}
+
+
 </style>
 </head>
 <body>
@@ -2427,7 +2514,15 @@ With lots of hugs and love, from someone who cares.
 
             </div>
 
-            <div class="todo-list" id="todoList"></div>
+            <div class="todo-progress">
+    <span id="todoProgressText">0 of 0 completed</span>
+
+    <div class="todo-progress-bar">
+        <div id="todoProgressFill"></div>
+    </div>
+</div>
+
+<div class="todo-list" id="todoList"></div>
 
         </div>
 
@@ -2475,7 +2570,12 @@ function saveTodos() {
 
         todos.push({
             text: item.querySelector(".todo-text").textContent,
-            done: item.querySelector(".todo-check").checked
+
+            done: item.querySelector(".todo-check").checked,
+
+            addedDate: item.dataset.addedDate,
+
+            completedDate: item.dataset.completedDate || null
         });
 
     });
@@ -2489,21 +2589,69 @@ function saveTodos() {
 
 /* ===== CREATE TODO ===== */
 
-function createTodo(text, done = false) {
+function createTodo(
+    text,
+    done = false,
+    addedDate = new Date().toISOString(),
+    completedDate = null
+) {
 
     const item = document.createElement("div");
 
     item.className = "todo-item";
 
+    /* Store dates on the task itself */
+    item.dataset.addedDate = addedDate;
+
+    if (completedDate) {
+        item.dataset.completedDate = completedDate;
+    }
+
     item.innerHTML = `
         <input type="checkbox" class="todo-check">
 
-        <span class="todo-text"></span>
+        <div class="todo-info">
+            <span class="todo-text"></span>
+            <span class="todo-date"></span>
+        </div>
 
         <button class="todo-delete">×</button>
     `;
 
     item.querySelector(".todo-text").textContent = text;
+
+    const dateElement = item.querySelector(".todo-date");
+
+
+    /* Format the added date */
+
+    function formatDate(dateString) {
+
+        const date = new Date(dateString);
+
+        return date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        });
+    }
+
+
+    /* Show date */
+
+    if (completedDate) {
+
+        dateElement.textContent =
+            `Added ${formatDate(addedDate)} · Completed ${formatDate(completedDate)}`;
+
+        dateElement.classList.add("completed");
+
+    } else {
+
+        dateElement.textContent =
+            `Added ${formatDate(addedDate)}`;
+
+    }
 
 
     /* Restore completed status */
@@ -2523,7 +2671,29 @@ function createTodo(text, done = false) {
 
         item.classList.toggle("done", this.checked);
 
+        if (this.checked) {
+
+            const completed = new Date().toISOString();
+
+            item.dataset.completedDate = completed;
+
+            dateElement.textContent =
+                `Added ${formatDate(item.dataset.addedDate)} · Completed ${formatDate(completed)}`;
+
+            dateElement.classList.add("completed");
+
+        } else {
+
+            delete item.dataset.completedDate;
+
+            dateElement.textContent =
+                `Added ${formatDate(item.dataset.addedDate)}`;
+
+            dateElement.classList.remove("completed");
+        }
+
         saveTodos();
+        updateTodoProgress();
 
     });
 
@@ -2535,11 +2705,14 @@ function createTodo(text, done = false) {
         item.remove();
 
         saveTodos();
+        updateTodoProgress();
 
     });
 
 
     todoList.appendChild(item);
+
+    updateTodoProgress();
 }
 
 
@@ -2551,7 +2724,12 @@ function addTodo() {
 
     if (!text) return;
 
-    createTodo(text);
+    /* Create task with current date */
+    createTodo(
+        text,
+        false,
+        new Date().toISOString()
+    );
 
     saveTodos();
 
@@ -2589,11 +2767,12 @@ function loadTodos() {
 
         createTodo(
             todo.text,
-            todo.done
+            todo.done,
+            todo.addedDate || new Date().toISOString(),
+            todo.completedDate || null
         );
 
     });
-
 }
 
 
@@ -2710,6 +2889,24 @@ notesPopup.addEventListener("click", (e) => {
     notesPopup.classList.remove("show");
   }
 });
+function updateTodoProgress() {
+
+    const items = document.querySelectorAll(".todo-item");
+
+    const total = items.length;
+
+    const completed =
+        document.querySelectorAll(".todo-item.done").length;
+
+    const percentage =
+        total === 0 ? 0 : (completed / total) * 100;
+
+    document.getElementById("todoProgressText").textContent =
+        `${completed} of ${total} completed`;
+
+    document.getElementById("todoProgressFill").style.width =
+        `${percentage}%`;
+}
 </script>
 </body>
 </html>
