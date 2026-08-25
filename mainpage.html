@@ -940,10 +940,12 @@ body {
         border-color .25s ease,
         box-shadow .25s ease;
 }
-/* Make Notes popup thinner */
-#notesPopup .poem-box {
+/* ===== Notes Popup ===== */
+
+#notesPopup .todo-box {
     width: 620px;
     max-width: 90%;
+    height: 680px;
 }
 
 @keyframes popup{
@@ -1847,24 +1849,7 @@ body::after{
 #messagePopup .poem-content::-webkit-scrollbar-thumb:hover{
     background:rgba(255,255,255,.42);
 }
-/* Notes Popup Points */
-.notes-list {
-    text-align: left;
-    margin: 20px 0 0;
-    padding-left: 25px;
-}
 
-.notes-list li {
-    margin-bottom: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    line-height: 1.7;
-    color: #FFFFFF;
-}
-
-.notes-list li::marker {
-    color: #CC8783;
-}
 
 /* ===== To-Do List Popup ===== */
 
@@ -2012,6 +1997,10 @@ body::after{
 
     background: rgba(255,255,255,.18);
     color: #FFFFFF;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
 
     cursor: pointer;
 
@@ -2185,7 +2174,317 @@ body::after{
 .todo-content::-webkit-scrollbar-thumb:hover {
     background: rgba(255,255,255,.42);
 }
+/* ===== Notes System ===== */
 
+.notes-input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.notes-input {
+    flex: 1;
+
+    height: 44px;
+
+    padding: 0 14px;
+
+    border-radius: 8px;
+
+    border: 1px solid rgba(255,255,255,.28);
+
+    background: rgba(255,255,255,.12);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    color: #FFFFFF;
+
+    outline: none;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.notes-input::placeholder {
+    color: rgba(255,255,255,.55);
+}
+
+.notes-input:focus {
+    border-color: rgba(255,255,255,.45);
+    background: rgba(255,255,255,.15);
+}
+
+.notes-add {
+    width: 90px;
+    height: 44px;
+
+    border-radius: 8px;
+
+    border: 1px solid rgba(255,255,255,.28);
+
+    background: rgba(255,255,255,.18);
+
+    color: #FFFFFF;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.notes-add:hover {
+    transform: translateY(-2px);
+
+    background: rgba(255,255,255,.28);
+
+    border-color: rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.notes-add:active {
+    transform: translateY(0);
+
+    background: rgba(255,255,255,.22);
+}
+
+.notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.note-item {
+    min-height: 78px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 15px 16px;
+
+    border-radius: 9px;
+
+    border: 1px solid rgba(255,255,255,.22);
+
+    background: rgba(255,255,255,.08);
+
+    box-shadow:
+        0 0 10px rgba(201,138,138,.12),
+        0 0 0 1px rgba(201,138,138,.08);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.note-item:hover {
+    background: rgba(255,255,255,.12);
+
+    transform: translateY(-1px);
+
+    border-color: rgba(201,138,138,.5);
+
+    box-shadow:
+        0 0 14px rgba(201,138,138,.22),
+        0 0 28px rgba(201,138,138,.08),
+        0 0 0 1px rgba(201,138,138,.12);
+}
+
+/* Pinned note keeps the hover glow */
+
+.note-item.pinned {
+    background: rgba(255,255,255,.16);
+
+    border-color: rgba(255,255,255,.75);
+
+    box-shadow:
+        0 0 16px rgba(201,138,138,.38),
+        0 0 32px rgba(201,138,138,.16),
+        0 0 0 1px rgba(255,255,255,.18);
+
+    color: #FFFFFF;
+}
+
+.note-item.pinned:hover {
+    transform: translateY(-1px);
+}
+
+/* Pinned pin button */
+
+.note-pin.pinned {
+    color: #C98A8A;
+
+    background: rgba(201,138,138,.18);
+
+    border-color: rgba(201,138,138,.5);
+
+    box-shadow:
+        0 0 10px rgba(201,138,138,.18),
+        0 0 0 1px rgba(201,138,138,.08);
+}
+
+.note-pin.pinned:hover {
+    background: rgba(201,138,138,.22);
+
+    border-color: rgba(201,138,138,.6);
+}
+
+/* ===== Pin Button ===== */
+
+.note-pin {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 7px;
+
+    background: rgba(255,255,255,.08);
+
+    color: rgba(255,255,255,.55);
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        box-shadow .2s ease;
+}
+
+.note-pin svg {
+    width: 15px;
+    height: 15px;
+}
+
+.note-pin:hover {
+    transform: translateY(-1px);
+
+    background: rgba(255,255,255,.16);
+
+    border-color: rgba(255,255,255,.4);
+
+    color: #FFFFFF;
+}
+
+.note-item:hover {
+    background: rgba(255,255,255,.12);
+
+    transform: translateY(-1px);
+
+    border-color: rgba(201,138,138,.5);
+
+    box-shadow:
+        0 0 14px rgba(201,138,138,.22),
+        0 0 28px rgba(201,138,138,.08),
+        0 0 0 1px rgba(201,138,138,.12);
+}
+
+/* Pinned note keeps the hover glow */
+
+.note-item.pinned {
+    background: rgba(255,255,255,.12);
+
+    border-color: rgba(201,138,138,.5);
+
+    box-shadow:
+        0 0 14px rgba(201,138,138,.22),
+        0 0 28px rgba(201,138,138,.08),
+        0 0 0 1px rgba(201,138,138,.12);
+}
+
+.note-item.pinned:hover {
+    transform: translateY(-1px);
+}
+
+/* Pinned pin button */
+
+.note-pin.pinned {
+    color: #C98A8A;
+
+    background: rgba(201,138,138,.18);
+
+    border-color: rgba(201,138,138,.5);
+
+    box-shadow:
+        0 0 10px rgba(201,138,138,.18),
+        0 0 0 1px rgba(201,138,138,.08);
+}
+
+.note-pin.pinned:hover {
+    background: rgba(201,138,138,.22);
+
+    border-color: rgba(201,138,138,.6);
+}
+
+.note-pin.pinned:hover {
+    background: rgba(201,138,138,.20);
+    border-color: rgba(201,138,138,.6);
+}
+
+.note-info {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.note-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+
+    color: #FFFFFF;
+
+    word-break: break-word;
+}
+
+.note-date {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+
+    color: rgba(255,255,255,.45);
+}
+
+.note-delete {
+    border: none;
+
+    background: transparent;
+
+    color: rgba(255,255,255,.55);
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    line-height: 1;
+
+    padding: 4px;
+}
+
+.note-delete:hover {
+    color: #FFFFFF;
+}
 </style>
 </head>
 <body>
@@ -2540,32 +2839,43 @@ With lots of hugs and love, from someone who cares.
 <!-- Notes Popup -->
 <div class="poem-popup" id="notesPopup">
 
-    <div class="poem-box">
+    <div class="todo-box">
 
-        <div class="poem-header">
-            <span class="close-poem" id="closeNotes">
+        <div class="todo-header">
+
+            <div class="todo-title">
+                Notes
+            </div>
+
+            <button class="todo-close" id="closeNotes">
                 Close
-            </span>
-        </div>
-
-        <div class="poem-content">
-
-            <h2>Notes</h2>
-
-            <ul class="notes-list">
-                <li>I’m still working on a feature where we can both view and add notes for each other. It’s a little difficult, but I’ll figure it out.</li>
-                <li>You can also see all the changes and additions I’ve made to this website through the Changelog in the About tab.</li>
-                <li>I’m writing more letters, so there’ll be more for you to read while I’m gone.</li>
-                <li>After finishing this, I’m going to take a little break for a while. Not from this place though. I’ll still keep updating it, so don’t worry.</li>
-                <li>If something ever seems off or broken, just try refreshing the website. And please let me know if you find anything, so I can keep making this place as perfect as it can be for you.</li>
-            </ul>
+            </button>
 
         </div>
 
-        <div class="poem-footer">
-            <span>Updated on:</span>
-            <span class="poem-date">11 August 2026</span>
-        </div>
+        <div class="todo-content">
+
+    <div class="notes-input-row">
+
+        <input
+            type="text"
+            id="notesInput"
+            class="notes-input"
+            placeholder="Write a little note..."
+        >
+
+        <button
+            class="notes-add"
+            id="notesAdd"
+        >
+            Add
+        </button>
+
+    </div>
+
+    <div class="notes-list" id="notesList"></div>
+
+</div>
 
     </div>
 
@@ -3174,21 +3484,341 @@ motdPopup.addEventListener("click", (e) => {
   }
 });
 // --------- Notes Popup ---------
+
 const notesPopup = document.getElementById("notesPopup");
 
 document.getElementById("notesBtn").addEventListener("click", () => {
-  notesPopup.classList.add("show");
+    notesPopup.classList.add("show");
 });
 
 document.getElementById("closeNotes").addEventListener("click", () => {
-  notesPopup.classList.remove("show");
+    notesPopup.classList.remove("show");
 });
 
 notesPopup.addEventListener("click", (e) => {
-  if (e.target === notesPopup) {
-    notesPopup.classList.remove("show");
-  }
+    if (e.target === notesPopup) {
+        notesPopup.classList.remove("show");
+    }
 });
+
+
+/* ===== Notes System ===== */
+
+const notesInput = document.getElementById("notesInput");
+const notesAdd = document.getElementById("notesAdd");
+const notesList = document.getElementById("notesList");
+
+const NOTES_STORAGE_KEY = "homeButOnlineNotes";
+
+
+/* ===== Save Notes ===== */
+
+function saveNotes() {
+
+    const notes = [];
+
+    document.querySelectorAll(".note-item").forEach(note => {
+
+        notes.push({
+            text: note.querySelector(".note-text").textContent,
+            date: note.dataset.date,
+            pinned: note.classList.contains("pinned")
+        });
+
+    });
+
+    localStorage.setItem(
+        NOTES_STORAGE_KEY,
+        JSON.stringify(notes)
+    );
+}
+
+
+/* ===== Sort Notes ===== */
+
+function sortNotes() {
+
+    const notes = [
+        ...notesList.querySelectorAll(".note-item")
+    ];
+
+    notes.sort((a, b) => {
+
+        const aPinned =
+            a.classList.contains("pinned");
+
+        const bPinned =
+            b.classList.contains("pinned");
+
+
+        /* Pinned notes always stay on top */
+
+        if (aPinned && !bPinned) return -1;
+
+        if (!aPinned && bPinned) return 1;
+
+
+        /* Newer notes first */
+
+        return (
+            new Date(b.dataset.date) -
+            new Date(a.dataset.date)
+        );
+
+    });
+
+
+    notes.forEach(note => {
+        notesList.appendChild(note);
+    });
+}
+
+
+/* ===== Create Note ===== */
+
+function createNote(
+    text,
+    date = new Date().toISOString(),
+    pinned = false
+) {
+
+    const noteItem =
+        document.createElement("div");
+
+    noteItem.className = "note-item";
+
+    noteItem.dataset.date = date;
+
+
+    noteItem.innerHTML = `
+        <div class="note-info">
+
+            <span class="note-text"></span>
+
+            <span class="note-date"></span>
+
+        </div>
+
+        <button
+            class="note-pin"
+            type="button"
+            aria-label="Pin note"
+            title="Pin note"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <path
+                    d="M8 3h8l-1 6 3 4H6l3-4-1-6Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                />
+
+                <path
+                    d="M12 13v8"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                />
+            </svg>
+        </button>
+
+        <button
+            class="note-delete"
+            type="button"
+        >
+            ×
+        </button>
+    `;
+
+
+    /* Text */
+
+    noteItem
+        .querySelector(".note-text")
+        .textContent = text;
+
+
+    /* Date */
+
+    const formattedDate =
+        new Date(date).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        });
+
+    noteItem
+        .querySelector(".note-date")
+        .textContent =
+        `Added ${formattedDate}`;
+
+
+    /* Restore pinned state */
+
+    if (pinned) {
+
+        noteItem.classList.add("pinned");
+
+        const pinButton =
+            noteItem.querySelector(".note-pin");
+
+        pinButton.classList.add("pinned");
+
+        pinButton.setAttribute(
+            "aria-label",
+            "Unpin note"
+        );
+
+        pinButton.setAttribute(
+            "title",
+            "Unpin note"
+        );
+    }
+
+
+    /* ===== Pin / Unpin ===== */
+
+    noteItem
+        .querySelector(".note-pin")
+        .addEventListener("click", () => {
+
+            const pinButton =
+                noteItem.querySelector(".note-pin");
+
+            const isPinned =
+                noteItem.classList.toggle("pinned");
+
+
+            pinButton.classList.toggle(
+                "pinned",
+                isPinned
+            );
+
+
+            pinButton.setAttribute(
+                "aria-label",
+                isPinned
+                    ? "Unpin note"
+                    : "Pin note"
+            );
+
+
+            pinButton.setAttribute(
+                "title",
+                isPinned
+                    ? "Unpin note"
+                    : "Pin note"
+            );
+
+
+            /* Move pinned notes to top */
+
+            sortNotes();
+
+            saveNotes();
+
+        });
+
+
+    /* ===== Delete ===== */
+
+    noteItem
+        .querySelector(".note-delete")
+        .addEventListener("click", () => {
+
+            noteItem.remove();
+
+            saveNotes();
+
+        });
+
+
+    notesList.appendChild(noteItem);
+
+    sortNotes();
+}
+
+
+/* ===== Add Note ===== */
+
+function addNote() {
+
+    const text =
+        notesInput.value.trim();
+
+    if (!text) return;
+
+
+    createNote(
+        text,
+        new Date().toISOString(),
+        false
+    );
+
+
+    notesInput.value = "";
+
+    notesInput.focus();
+
+    saveNotes();
+}
+
+
+/* ===== Add Button ===== */
+
+notesAdd.addEventListener(
+    "click",
+    addNote
+);
+
+
+/* ===== Enter Key ===== */
+
+notesInput.addEventListener(
+    "keydown",
+    (e) => {
+
+        if (e.key === "Enter") {
+            addNote();
+        }
+
+    }
+);
+
+
+/* ===== Load Saved Notes ===== */
+
+function loadNotes() {
+
+    const savedNotes =
+        JSON.parse(
+            localStorage.getItem(
+                NOTES_STORAGE_KEY
+            ) || "[]"
+        );
+
+
+    savedNotes.forEach(note => {
+
+        createNote(
+            note.text,
+            note.date,
+            note.pinned
+        );
+
+    });
+
+
+    sortNotes();
+}
+
+
+loadNotes();
+
+
 function updateTodoProgress() {
 
     const items = document.querySelectorAll(".todo-item");
