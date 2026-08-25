@@ -2953,6 +2953,10 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
+// --------- Notes Supabase ---------
+
+const NOTES_TABLE = "notes";
+
 
 // --------- Supabase Connection Test ---------
 
@@ -3513,24 +3517,49 @@ const NOTES_STORAGE_KEY = "homeButOnlineNotes";
 
 /* ===== Save Notes ===== */
 
-function saveNotes() {
+async function saveNotes() {
 
     const notes = [];
 
     document.querySelectorAll(".note-item").forEach(note => {
-
         notes.push({
             text: note.querySelector(".note-text").textContent,
-            date: note.dataset.date,
+            added_date: note.dataset.date,
             pinned: note.classList.contains("pinned")
         });
-
     });
 
-    localStorage.setItem(
-        NOTES_STORAGE_KEY,
-        JSON.stringify(notes)
-    );
+    // Remove the current notes from Supabase
+    const { error: deleteError } = await supabaseClient
+        .from(NOTES_TABLE)
+        .delete()
+        .neq("id", 0);
+
+    if (deleteError) {
+        console.error(
+            "Failed to clear notes:",
+            deleteError
+        );
+        return;
+    }
+
+    // Save the current notes to Supabase
+    if (notes.length > 0) {
+
+        const { error: insertError } = await supabaseClient
+            .from(NOTES_TABLE)
+            .insert(notes);
+
+        if (insertError) {
+            console.error(
+                "Failed to save notes:",
+                insertError
+            );
+            return;
+        }
+    }
+
+    console.log("Notes synced successfully.");
 }
 
 
@@ -3579,15 +3608,16 @@ function sortNotes() {
 function createNote(
     text,
     date = new Date().toISOString(),
-    pinned = false
+    pinned = false,
+    id = null
 ) {
 
     const noteItem =
-        document.createElement("div");
+    document.createElement("div");
 
-    noteItem.className = "note-item";
-
-    noteItem.dataset.date = date;
+noteItem.className = "note-item";
+noteItem.dataset.date = date;
+noteItem.dataset.id = id;
 
 
     noteItem.innerHTML = `
@@ -3682,58 +3712,84 @@ function createNote(
     /* ===== Pin / Unpin ===== */
 
     noteItem
-        .querySelector(".note-pin")
-        .addEventListener("click", () => {
+    .querySelector(".note-pin")
+    .addEventListener("click", async () => {
 
-            const pinButton =
-                noteItem.querySelector(".note-pin");
+    const pinButton =
+        noteItem.querySelector(".note-pin");
 
-            const isPinned =
-                noteItem.classList.toggle("pinned");
+    const isPinned =
+        noteItem.classList.toggle("pinned");
 
+    pinButton.classList.toggle(
+        "pinned",
+        isPinned
+    );
 
-            pinButton.classList.toggle(
-                "pinned",
-                isPinned
-            );
+    pinButton.setAttribute(
+        "aria-label",
+        isPinned
+            ? "Unpin note"
+            : "Pin note"
+    );
 
+    pinButton.setAttribute(
+        "title",
+        isPinned
+            ? "Unpin note"
+            : "Pin note"
+    );
 
-            pinButton.setAttribute(
-                "aria-label",
-                isPinned
-                    ? "Unpin note"
-                    : "Pin note"
-            );
+    sortNotes();
 
+    const { error } = await supabaseClient
+        .from(NOTES_TABLE)
+        .update({
+            pinned: isPinned
+        })
+        .eq("id", noteItem.dataset.id);
 
-            pinButton.setAttribute(
-                "title",
-                isPinned
-                    ? "Unpin note"
-                    : "Pin note"
-            );
+    if (error) {
+        console.error(
+            "Failed to update note:",
+            error
+        );
 
-
-            /* Move pinned notes to top */
-
-            sortNotes();
-
-            saveNotes();
-
-        });
+        alert("Couldn't update the note.");
+    }
+});
 
 
     /* ===== Delete ===== */
 
     noteItem
-        .querySelector(".note-delete")
-        .addEventListener("click", () => {
+    .querySelector(".note-delete")
+    .addEventListener("click", async () => {
 
-            noteItem.remove();
+    const noteId = noteItem.dataset.id;
 
-            saveNotes();
+    if (!noteId) {
+        console.error("Cannot delete note: missing ID");
+        return;
+    }
 
-        });
+    const { error } = await supabaseClient
+        .from(NOTES_TABLE)
+        .delete()
+        .eq("id", noteId);
+
+    if (error) {
+        console.error(
+            "Failed to delete note:",
+            error
+        );
+
+        alert("Couldn't delete the note.");
+        return;
+    }
+
+    noteItem.remove();
+});
 
 
     notesList.appendChild(noteItem);
@@ -3744,26 +3800,48 @@ function createNote(
 
 /* ===== Add Note ===== */
 
-function addNote() {
+async function addNote() {
 
     const text =
         notesInput.value.trim();
 
     if (!text) return;
 
+    notesAdd.disabled = true;
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from(NOTES_TABLE)
+        .insert({
+            text: text,
+            pinned: false
+        })
+        .select()
+        .single();
+
+    notesAdd.disabled = false;
+
+    if (error) {
+        console.error(
+            "Failed to add note:",
+            error
+        );
+
+        alert("Couldn't add the note.");
+        return;
+    }
 
     createNote(
-        text,
-        new Date().toISOString(),
-        false
+        data.text,
+        data.added_date,
+        data.pinned,
+        data.id
     );
 
-
     notesInput.value = "";
-
     notesInput.focus();
-
-    saveNotes();
 }
 
 
@@ -3791,26 +3869,36 @@ notesInput.addEventListener(
 
 /* ===== Load Saved Notes ===== */
 
-function loadNotes() {
+async function loadNotes() {
 
-    const savedNotes =
-        JSON.parse(
-            localStorage.getItem(
-                NOTES_STORAGE_KEY
-            ) || "[]"
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from(NOTES_TABLE)
+        .select("*")
+        .order("added_date", {
+            ascending: false
+        });
+
+    if (error) {
+        console.error(
+            "Failed to load notes:",
+            error
         );
+        return;
+    }
 
-
-    savedNotes.forEach(note => {
+    data.forEach(note => {
 
         createNote(
             note.text,
-            note.date,
-            note.pinned
+            note.added_date,
+            note.pinned,
+            note.id
         );
 
     });
-
 
     sortNotes();
 }
