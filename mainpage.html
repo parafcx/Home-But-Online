@@ -948,6 +948,13 @@ body {
     height: 680px;
 }
 
+/* ===== CineDates Popup ===== */
+
+#cinedatesPopup .todo-box {
+    width: 620px;
+    max-width: 90%;
+    height: 680px;
+}
 @keyframes popup{
 
     from{
@@ -1523,7 +1530,7 @@ body::after{
 
 .playlist-card:hover,
 .notes-panel:hover,
-.surprise-panel:hover,
+.cinedates-panel:hover,
 .timezone-card:hover{
 
     transform:translateY(-3px);
@@ -1702,114 +1709,6 @@ body::after{
     text-align:left;
 
     margin-bottom:10px;
-}
-
-.surprise-panel{
-    position:absolute;
-    top:calc(50% + 11px);
-    right:42px;
-
-    width:230px;
-    height:189px;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-
-    overflow:hidden;
-
-    background:rgba(255,255,255,.08);
-
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-
-    border-radius:12px;
-    border:1.5px solid rgba(255,255,255,.6);
-
-    box-shadow:
-        0 8px 24px rgba(0,0,0,.12);
-
-    transition:
-        transform .28s cubic-bezier(.22,.61,.36,1),
-        box-shadow .28s cubic-bezier(.22,.61,.36,1),
-        border-color .25s ease,
-        background .25s ease;
-
-    padding-top:24px;
-}
-
-.surprise-panel:hover{
-    transform:translateY(-3px);
-
-    background:rgba(255,255,255,.12);
-
-    border-color:#fff;
-
-    box-shadow:
-        0 18px 40px rgba(0,0,0,.22),
-        0 0 0 1px rgba(255,255,255,.22),
-        inset 0 1px 0 rgba(255,255,255,.22);
-}
-
-.surprise-panel .playlist-text{
-    width:160px;
-    margin-top:18px;
-    text-align:center;
-
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:15px;
-    font-weight:400;
-    line-height:1.35;
-
-    color:#FFFFFF;
-    text-shadow:0 1px 3px rgba(0,0,0,.35);
-}
-.surprise-btn{
-    position:relative;
-    z-index:1;
-
-    margin-top:auto;
-    margin-bottom:20px;
-
-    width:160px;
-    height:42px;
-
-    border:1px solid rgba(255,255,255,.28);
-    border-radius:8px;
-
-    background:rgba(255,255,255,.18);
-
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-
-    color:#FFFFFF;
-
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:14px;
-    font-weight:500;
-
-    cursor:pointer;
-
-    transition:
-        transform .25s ease,
-        background .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
-}
-
-.surprise-btn:hover{
-    transform:translateY(-2px);
-
-    background:rgba(255,255,255,.28);
-    border-color:rgba(255,255,255,.4);
-
-    box-shadow:
-        0 6px 18px rgba(201,138,138,.18);
-}
-
-.surprise-btn:active{
-    transform:translateY(0);
-    background:rgba(255,255,255,.22);
 }
 
 .poem-box{
@@ -2485,6 +2384,449 @@ body::after{
 .note-delete:hover {
     color: #FFFFFF;
 }
+
+/* ===== CineDates Panel ===== */
+
+.cinedates-panel{
+    position:absolute;
+    top:calc(50% + 11px);
+    right:42px;
+
+    width:230px;
+    height:189px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-radius:12px;
+    border:1.5px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.12);
+
+    transition:
+        transform .28s cubic-bezier(.22,.61,.36,1),
+        box-shadow .28s cubic-bezier(.22,.61,.36,1),
+        border-color .25s ease,
+        background .25s ease;
+
+    padding-top:24px;
+}
+
+.cinedates-panel:hover{
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.22),
+        0 0 0 1px rgba(255,255,255,.22),
+        inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.cinedates-panel .playlist-text{
+    width:160px;
+    margin-top:18px;
+
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    font-weight:400;
+
+    line-height:1.35;
+
+    color:#FFFFFF;
+
+    text-shadow:
+        0 1px 3px rgba(0,0,0,.35);
+}
+
+.cinedates-btn{
+    position:relative;
+    z-index:1;
+
+    margin-top:auto;
+    margin-bottom:20px;
+
+    width:160px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.cinedates-btn:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.cinedates-btn:active{
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+
+/* ===== CineDates Popup Input ===== */
+
+.cinedates-input-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:22px;
+}
+
+.cinedates-input{
+    flex:1;
+    height:44px;
+
+    padding:0 14px;
+
+    border-radius:8px;
+
+    border:1px solid rgba(255,255,255,.28);
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    color:#FFFFFF;
+
+    outline:none;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+}
+
+.cinedates-input::placeholder{
+    color:rgba(255,255,255,.55);
+}
+
+.cinedates-input:focus{
+    border-color:rgba(255,255,255,.45);
+    background:rgba(255,255,255,.15);
+}
+
+/* Add button */
+
+.cinedates-add{
+    width:90px;
+    height:44px;
+
+    border-radius:8px;
+
+    border:1px solid rgba(255,255,255,.28);
+
+    background:rgba(255,255,255,.18);
+
+    color:#FFFFFF;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.cinedates-add:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.28);
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+        0 6px 18px rgba(201,138,138,.18);
+}
+
+.cinedates-add:active{
+    transform:translateY(0);
+
+    background:rgba(255,255,255,.22);
+}
+
+/* ===== CineDates Items ===== */
+
+.cinedates-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.cinedates-item{
+    min-height:88px;
+
+    position:relative;
+
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:8px;
+
+    padding:13px 42px 13px 14px;
+
+    border-radius:9px;
+
+    border:1px solid rgba(255,255,255,.22);
+
+    background:rgba(255,255,255,.08);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.cinedates-item:hover{
+    transform:translateY(-1px);
+
+    background:rgba(255,255,255,.12);
+
+    border-color:rgba(201,138,138,.5);
+
+    box-shadow:
+        0 0 14px rgba(201,138,138,.18);
+}
+
+.cinedates-info{
+    width:100%;
+
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.cinedates-name{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    color:#FFFFFF;
+
+    word-break:break-word;
+}
+
+.cinedates-date{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:rgba(255,255,255,.45);
+}
+
+.cinedates-date.watched-date{
+    color:rgba(201,138,138,.8);
+}
+
+
+/* ===== CineDates Bottom Row ===== */
+
+.cinedates-bottom{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+}
+
+
+/* ===== Watched ===== */
+
+.cinedates-watched{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+
+    color:rgba(255,255,255,.6);
+
+    user-select:none;
+}
+
+.cinedates-check{
+    appearance:none;
+    -webkit-appearance:none;
+
+    width:17px;
+    height:17px;
+
+    border:1.5px solid rgba(255,255,255,.45);
+    border-radius:5px;
+
+    background:transparent;
+
+    cursor:pointer;
+
+    display:grid;
+    place-items:center;
+
+    flex-shrink:0;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.cinedates-check:hover{
+    border-color:#C98A8A;
+    transform:scale(1.06);
+}
+
+.cinedates-check:checked{
+    background:#C98A8A;
+    border-color:#C98A8A;
+}
+
+.cinedates-check:checked::after{
+    content:"";
+
+    width:5px;
+    height:9px;
+
+    border-right:2px solid #FFFFFF;
+    border-bottom:2px solid #FFFFFF;
+
+    transform:rotate(45deg) translate(-1px,-1px);
+
+    display:block;
+}
+
+
+/* ===== Centered Delete Button ===== */
+
+.cinedates-delete{
+    position:absolute;
+
+    top:50%;
+    right:12px;
+
+    transform:translateY(-50%);
+
+    width:24px;
+    height:24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:none;
+    background:transparent;
+
+    color:rgba(255,255,255,.45);
+
+    cursor:pointer;
+
+    font-size:18px;
+    line-height:1;
+
+    padding:0;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+.cinedates-delete:hover{
+    color:#FFFFFF;
+
+    transform:translateY(-50%) scale(1.08);
+}
+
+
+/* ===== Watched Movie ===== */
+
+.cinedates-item.watched{
+    background:rgba(255,255,255,.05);
+}
+
+.cinedates-item.watched .cinedates-name{
+    text-decoration:line-through;
+    opacity:.55;
+}
+
+.cinedates-item.watched .cinedates-date{
+    opacity:.45;
+}
+
+.cinedates-item.watched .cinedates-date.watched-date{
+    color:rgba(201,138,138,.8);
+    opacity:1;
+}
+
+.cinedates-item.watched .cinedates-watched{
+    color:rgba(201,138,138,.9);
+}
+
+/* ===== CineDates Progress ===== */
+
+.cinedates-progress{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:14px;
+
+    padding:0 2px;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+
+    color:rgba(255,255,255,.55);
+}
+
+#cinedatesPending{
+    color:rgba(255,255,255,.58);
+}
+
+#cinedatesCompleted{
+    color:rgba(255,255,255,.58);
+}
+
+
+</style>
+
 </style>
 </head>
 <body>
@@ -2584,7 +2926,7 @@ body::after{
     </div>
 
     <button class="playlist-btn" id="spotifyBtn">
-        Open Spotify
+        Listen
     </button>
 
 </div>
@@ -2610,7 +2952,7 @@ body::after{
         </div>
 
         <button class="playlist-btn" id="skribblBtn">
-            View Poem
+            Open
         </button>
 
     </div>
@@ -2696,36 +3038,53 @@ body::after{
         A place to keep our little notes and thoughts.
     </div>
 
-    <button class="notes-btn" id="notesBtn">
-        Open Notes
+        <button class="notes-btn" id="notesBtn">
+        Open
     </button>
 
 </div>
 
-<!-- Surprise Panel -->
-<div class="surprise-panel">
+<!-- CineDates Panel -->
+<div class="cinedates-panel">
 
     <div class="playlist-title">
-        <svg class="notes-icon" viewBox="0 0 24 24" fill="none">
-            <path d="M12 3L14.8 8.7L21 9.5L16.5 13.8L17.6 20L12 17L6.4 20L7.5 13.8L3 9.5L9.2 8.7L12 3Z"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linejoin="round"/>
-        </svg>
 
-        <span>Surprise</span>
+        <svg class="notes-icon" viewBox="0 0 24 24" fill="none">
+
+    <rect
+        x="2.5"
+        y="6"
+        width="14"
+        height="13"
+        rx="2"
+        stroke="currentColor"
+        stroke-width="1.9"
+        stroke-linejoin="round"
+    />
+
+    <path
+        d="M16.5 9.5L21.5 6.8V18.2L16.5 15.5"
+        stroke="currentColor"
+        stroke-width="1.9"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+
+</svg>
+
+        <span>CineDates</span>
+
     </div>
 
     <div class="playlist-text">
-        Working on something special. Stay tuned.
+        All the movies we want to watch together.
     </div>
 
-    <button class="surprise-btn" id="surpriseBtn">
-    Coming Soon
-</button>
+    <button class="cinedates-btn" id="cinedatesBtn">
+        Open
+    </button>
 
 </div>
-
 
 </div>
 <!-- Bottom Bar -->
@@ -2882,6 +3241,64 @@ With lots of hugs and love, from someone who cares.
 </div>
 
 </div>
+
+<!-- CineDates Popup -->
+<div class="poem-popup" id="cinedatesPopup">
+
+    <div class="todo-box">
+
+        <div class="todo-header">
+
+            <div class="todo-title">
+                CineDates
+            </div>
+
+            <button class="todo-close" id="closeCinedates">
+                Close
+            </button>
+
+        </div>
+
+        <div class="todo-content">
+
+    <div class="cinedates-input-row">
+
+    <input
+        type="text"
+        id="cinedatesInput"
+        class="cinedates-input"
+        placeholder="Add a movie we should watch..."
+    >
+
+    <button
+        class="cinedates-add"
+        id="cinedatesAdd"
+    >
+        Add
+    </button>
+
+</div>
+
+<div class="cinedates-progress">
+
+    <span id="cinedatesPending">
+        Movies pending: 0
+    </span>
+
+    <span id="cinedatesCompleted">
+        Movies completed: 0
+    </span>
+
+</div>
+
+<div class="cinedates-list" id="cinedatesList"></div>
+
+</div>
+
+    </div>
+
+</div>
+
 <!-- ===== To-Do List Popup ===== -->
 
 <div class="poem-popup" id="todoPopup">
@@ -3506,6 +3923,28 @@ notesPopup.addEventListener("click", (e) => {
 });
 
 
+// --------- CineDates Popup ---------
+
+const cinedatesPopup = document.getElementById("cinedatesPopup");
+
+document.getElementById("cinedatesBtn").addEventListener("click", () => {
+    cinedatesPopup.classList.add("show");
+});
+
+document.getElementById("closeCinedates").addEventListener("click", () => {
+    cinedatesPopup.classList.remove("show");
+});
+
+cinedatesPopup.addEventListener("click", (e) => {
+    if (e.target === cinedatesPopup) {
+        cinedatesPopup.classList.remove("show");
+    }
+});
+
+
+/* ===== Notes System ===== */
+
+
 /* ===== Notes System ===== */
 
 const notesInput = document.getElementById("notesInput");
@@ -3925,6 +4364,304 @@ function updateTodoProgress() {
     document.getElementById("todoProgressFill").style.width =
         `${percentage}%`;
 }
+// ===== CineDates System =====
+
+const cinedatesInput =
+    document.getElementById("cinedatesInput");
+
+const cinedatesAdd =
+    document.getElementById("cinedatesAdd");
+
+const cinedatesList =
+    document.getElementById("cinedatesList");
+
+const cinedatesPending =
+    document.getElementById("cinedatesPending");
+
+const cinedatesCompleted =
+    document.getElementById("cinedatesCompleted");
+
+
+/* ===== CineDates Progress ===== */
+
+function updateCineDatesProgress() {
+
+    const movies =
+        document.querySelectorAll(".cinedates-item");
+
+    const total =
+        movies.length;
+
+    const completed =
+        document.querySelectorAll(
+            ".cinedates-item.watched"
+        ).length;
+
+    const pending =
+        total - completed;
+
+
+    cinedatesPending.textContent =
+        `Movies pending: ${pending}`;
+
+    cinedatesCompleted.textContent =
+        `Movies completed: ${completed}`;
+}
+
+
+/* ===== Create CineDate ===== */
+
+function createCineDate(
+    movieText,
+    addedDate = new Date(),
+    watched = false,
+    watchedDate = null
+) {
+
+    const item =
+        document.createElement("div");
+
+    item.className =
+        "cinedates-item";
+
+
+    item.innerHTML = `
+        <div class="cinedates-info">
+
+            <span class="cinedates-name"></span>
+
+            <span class="cinedates-date"></span>
+
+        </div>
+
+        <div class="cinedates-bottom">
+
+            <label class="cinedates-watched">
+
+                <input
+                    type="checkbox"
+                    class="cinedates-check"
+                >
+
+                <span>Watched</span>
+
+            </label>
+
+        </div>
+
+        <button
+            class="cinedates-delete"
+            type="button"
+            aria-label="Delete movie"
+        >
+            ×
+        </button>
+    `;
+
+
+    /* ===== Movie Name ===== */
+
+    item.querySelector(
+        ".cinedates-name"
+    ).textContent = movieText;
+
+
+    /* ===== Date Element ===== */
+
+    const dateElement =
+        item.querySelector(".cinedates-date");
+
+
+    /* ===== Format Date ===== */
+
+    function formatDate(dateString) {
+
+        return new Date(
+            dateString
+        ).toLocaleDateString(
+            "en-US",
+            {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
+    }
+
+
+    /* ===== Show Added / Watched Dates ===== */
+
+    if (watched && watchedDate) {
+
+        dateElement.textContent =
+            `Added ${formatDate(addedDate)} · Watched ${formatDate(watchedDate)}`;
+
+        dateElement.classList.add(
+            "watched-date"
+        );
+
+    } else {
+
+        dateElement.textContent =
+            `Added ${formatDate(addedDate)}`;
+
+    }
+
+
+    /* ===== Restore Watched State ===== */
+
+    const checkbox =
+        item.querySelector(".cinedates-check");
+
+    checkbox.checked =
+        watched;
+
+
+    if (watched) {
+
+        item.classList.add(
+            "watched"
+        );
+    }
+
+
+    /* ===== Watched Toggle ===== */
+
+    checkbox.addEventListener(
+        "change",
+        () => {
+
+            const isWatched =
+                checkbox.checked;
+
+
+            item.classList.toggle(
+                "watched",
+                isWatched
+            );
+
+
+            if (isWatched) {
+
+                const now =
+                    new Date().toISOString();
+
+
+                item.dataset.watchedDate =
+                    now;
+
+
+                dateElement.textContent =
+                    `Added ${formatDate(addedDate)} · Watched ${formatDate(now)}`;
+
+
+                dateElement.classList.add(
+                    "watched-date"
+                );
+
+            } else {
+
+                delete item.dataset.watchedDate;
+
+
+                dateElement.textContent =
+                    `Added ${formatDate(addedDate)}`;
+
+
+                dateElement.classList.remove(
+                    "watched-date"
+                );
+            }
+
+
+            /* Update counters */
+
+            updateCineDatesProgress();
+
+        }
+    );
+
+
+    /* ===== Delete Movie ===== */
+
+    item.querySelector(
+        ".cinedates-delete"
+    ).addEventListener(
+        "click",
+        () => {
+
+            item.remove();
+
+            /* Update counters */
+
+            updateCineDatesProgress();
+
+        }
+    );
+
+
+    /* ===== Add Movie To List ===== */
+
+    cinedatesList.appendChild(
+        item
+    );
+
+
+    /* Update counters */
+
+    updateCineDatesProgress();
+}
+
+
+/* ===== Add Movie ===== */
+
+cinedatesAdd.addEventListener(
+    "click",
+    () => {
+
+        const movieText =
+            cinedatesInput.value.trim();
+
+
+        if (!movieText) {
+            return;
+        }
+
+
+        createCineDate(
+            movieText
+        );
+
+
+        cinedatesInput.value =
+            "";
+
+
+        cinedatesInput.focus();
+
+    }
+);
+
+
+/* ===== Enter Key ===== */
+
+cinedatesInput.addEventListener(
+    "keydown",
+    (e) => {
+
+        if (e.key === "Enter") {
+
+            cinedatesAdd.click();
+
+        }
+
+    }
+);
+
+
+/* ===== Initial Counter ===== */
+
+updateCineDatesProgress();
 </script>
 </body>
 </html>
