@@ -2926,7 +2926,7 @@ body::after{
     </div>
 
     <button class="playlist-btn" id="spotifyBtn">
-        Listen
+        Open
     </button>
 
 </div>
@@ -3035,7 +3035,7 @@ body::after{
     </div>
 
     <div class="playlist-text">
-        A place to keep our little notes and thoughts.
+        A place for our notes and reminders.
     </div>
 
         <button class="notes-btn" id="notesBtn">
@@ -4366,6 +4366,8 @@ function updateTodoProgress() {
 }
 // ===== CineDates System =====
 
+const CINEDATES_TABLE = "cinedates";
+
 const cinedatesInput =
     document.getElementById("cinedatesInput");
 
@@ -4415,7 +4417,8 @@ function createCineDate(
     movieText,
     addedDate = new Date(),
     watched = false,
-    watchedDate = null
+    watchedDate = null,
+    movieId = null
 ) {
 
     const item =
@@ -4459,11 +4462,18 @@ function createCineDate(
     `;
 
 
-    /* ===== Movie Name ===== */
+    /* ===== Store Supabase ID ===== */
 
-    item.querySelector(
-        ".cinedates-name"
-    ).textContent = movieText;
+if (movieId !== null && movieId !== undefined) {
+    item.dataset.id = String(movieId);
+}
+
+
+/* ===== Movie Name ===== */
+
+item.querySelector(
+    ".cinedates-name"
+).textContent = movieText;
 
 
     /* ===== Date Element ===== */
@@ -4527,77 +4537,140 @@ function createCineDate(
 
     /* ===== Watched Toggle ===== */
 
-    checkbox.addEventListener(
-        "change",
-        () => {
+checkbox.addEventListener(
+    "change",
+    async () => {
 
-            const isWatched =
-                checkbox.checked;
+        const isWatched =
+            checkbox.checked;
 
 
-            item.classList.toggle(
-                "watched",
-                isWatched
+        item.classList.toggle(
+            "watched",
+            isWatched
+        );
+
+
+        if (isWatched) {
+
+            const now =
+                new Date().toISOString();
+
+
+            item.dataset.watchedDate =
+                now;
+
+
+            dateElement.textContent =
+                `Added ${formatDate(addedDate)} · Watched ${formatDate(now)}`;
+
+
+            dateElement.classList.add(
+                "watched-date"
             );
 
+        } else {
 
-            if (isWatched) {
-
-                const now =
-                    new Date().toISOString();
+            delete item.dataset.watchedDate;
 
 
-                item.dataset.watchedDate =
-                    now;
+            dateElement.textContent =
+                `Added ${formatDate(addedDate)}`;
 
 
-                dateElement.textContent =
-                    `Added ${formatDate(addedDate)} · Watched ${formatDate(now)}`;
-
-
-                dateElement.classList.add(
-                    "watched-date"
-                );
-
-            } else {
-
-                delete item.dataset.watchedDate;
-
-
-                dateElement.textContent =
-                    `Added ${formatDate(addedDate)}`;
-
-
-                dateElement.classList.remove(
-                    "watched-date"
-                );
-            }
-
-
-            /* Update counters */
-
-            updateCineDatesProgress();
-
+            dateElement.classList.remove(
+                "watched-date"
+            );
         }
-    );
+
+
+        /* Update counters */
+
+        updateCineDatesProgress();
+
+
+        /* Save watched status to Supabase */
+
+        const { error } = await supabaseClient
+            .from(CINEDATES_TABLE)
+            .update({
+                watched: isWatched,
+                watched_date: isWatched
+                    ? item.dataset.watchedDate
+                    : null
+            })
+            .eq("id", item.dataset.id);
+
+
+        if (error) {
+
+            console.error(
+                "Failed to update movie:",
+                error
+            );
+
+            alert(
+                "Couldn't update the movie."
+            );
+
+            return;
+        }
+
+    }
+);
 
 
     /* ===== Delete Movie ===== */
 
-    item.querySelector(
-        ".cinedates-delete"
-    ).addEventListener(
-        "click",
-        () => {
+item.querySelector(
+    ".cinedates-delete"
+).addEventListener(
+    "click",
+    async () => {
 
-            item.remove();
+        const movieId = item.dataset.id;
 
-            /* Update counters */
+        if (!movieId) {
+            console.error(
+                "Cannot delete movie: missing ID"
+            );
 
-            updateCineDatesProgress();
-
+            return;
         }
-    );
+
+
+        const { error } = await supabaseClient
+            .from(CINEDATES_TABLE)
+            .delete()
+            .eq("id", movieId);
+
+
+        if (error) {
+
+            console.error(
+                "Failed to delete movie:",
+                error
+            );
+
+            alert(
+                "Couldn't delete the movie."
+            );
+
+            return;
+        }
+
+
+        /* Remove from page only after Supabase confirms deletion */
+
+        item.remove();
+
+
+        /* Update counters */
+
+        updateCineDatesProgress();
+
+    }
+);
 
 
     /* ===== Add Movie To List ===== */
@@ -4617,7 +4690,7 @@ function createCineDate(
 
 cinedatesAdd.addEventListener(
     "click",
-    () => {
+    async () => {
 
         const movieText =
             cinedatesInput.value.trim();
@@ -4628,14 +4701,51 @@ cinedatesAdd.addEventListener(
         }
 
 
+        cinedatesAdd.disabled = true;
+
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from(CINEDATES_TABLE)
+            .insert({
+                movie: movieText,
+                watched: false
+            })
+            .select()
+            .single();
+
+
+        cinedatesAdd.disabled = false;
+
+
+        if (error) {
+
+            console.error(
+                "Failed to add movie:",
+                error
+            );
+
+            alert(
+                "Couldn't add the movie."
+            );
+
+            return;
+        }
+
+
         createCineDate(
-            movieText
+            data.movie,
+            data.added_date,
+            data.watched,
+            data.watched_date,
+            data.id
         );
 
 
         cinedatesInput.value =
             "";
-
 
         cinedatesInput.focus();
 
@@ -4662,6 +4772,55 @@ cinedatesInput.addEventListener(
 /* ===== Initial Counter ===== */
 
 updateCineDatesProgress();
+
+
+/* ===== Load CineDates From Supabase ===== */
+
+async function loadCineDates() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from(CINEDATES_TABLE)
+        .select("*")
+        .order("added_date", {
+            ascending: true
+        });
+
+
+    if (error) {
+
+        console.error(
+            "Failed to load CineDates:",
+            error
+        );
+
+        return;
+    }
+
+
+    data.forEach(movie => {
+
+        createCineDate(
+            movie.movie,
+            movie.added_date,
+            movie.watched,
+            movie.watched_date,
+            movie.id
+        );
+
+    });
+
+
+    updateCineDatesProgress();
+
+}
+
+
+/* Load shared movies when website opens */
+
+loadCineDates();
 </script>
 </body>
 </html>
