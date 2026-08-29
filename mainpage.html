@@ -5242,14 +5242,13 @@ item.querySelector(
 
     /* ===== Add Movie To List ===== */
 
-    cinedatesList.appendChild(
-        item
-    );
+cinedatesList.prepend(
+    item
+);
 
+/* Update counters */
 
-    /* Update counters */
-
-    updateCineDatesProgress();
+updateCineDatesProgress();
 }
 
 
@@ -5346,14 +5345,14 @@ updateCineDatesProgress();
 async function loadCineDates() {
 
     const {
-        data,
-        error
-    } = await supabaseClient
-        .from(CINEDATES_TABLE)
-        .select("*")
-        .order("added_date", {
-            ascending: true
-        });
+    data,
+    error
+} = await supabaseClient
+    .from(CINEDATES_TABLE)
+    .select("*")
+    .order("added_date", {
+        ascending: false
+    });
 
 
     if (error) {
@@ -5367,17 +5366,17 @@ async function loadCineDates() {
     }
 
 
-    data.forEach(movie => {
+    [...data].reverse().forEach(movie => {
 
-        createCineDate(
-            movie.movie,
-            movie.added_date,
-            movie.watched,
-            movie.watched_date,
-            movie.id
-        );
+    createCineDate(
+        movie.movie,
+        movie.added_date,
+        movie.watched,
+        movie.watched_date,
+        movie.id
+    );
 
-    });
+});
 
 
     updateCineDatesProgress();
