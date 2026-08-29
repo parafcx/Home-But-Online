@@ -973,6 +973,14 @@ body {
 
     border-bottom:1px solid rgba(255,255,255,.12);
 }
+
+#motdPopup .poem-header{
+    justify-content:flex-end;
+    border-bottom:none;
+    padding:0 28px 0;
+    min-height:0;
+    height:62px;
+}
 .close-poem{
 
     height:38px;
@@ -1073,14 +1081,17 @@ body {
 .poem-content::-webkit-scrollbar-thumb:hover{
     background:rgba(255,255,255,.4);
 }
-.motd-box .poem-content {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateY(-20px);
-  padding: 20px 60px;
-  overflow: hidden;
+.motd-box .poem-content{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:0 60px;
+
+    overflow:hidden;
+
+    transform:translateY(-25px);
 }
 .poem-content p{
 
@@ -1159,16 +1170,23 @@ body {
   overflow: hidden;
   height: 300px;
 }
-.motd-box .poem-content p {
-  margin: 0;
-  white-space: pre-line;
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #FFFFFF;
-  line-height: 1.9;
-  text-shadow: 0 1px 3px rgba(0,0,0,.3);
+.motd-box .poem-content p{
+    margin:0;
+    width:100%;
+
+    white-space:normal;
+
+    text-align:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    font-weight:400;
+
+    color:#FFFFFF;
+
+    line-height:1.9;
+
+    text-shadow:0 1px 3px rgba(0,0,0,.3);
 }
 
 .motd-box > *:not(.motd-image):not(.motd-overlay){
@@ -1932,7 +1950,15 @@ body::after{
 
 .todo-item:hover {
     background: rgba(255,255,255,.12);
+
     transform: translateY(-1px);
+
+    border-color: rgba(201,138,138,.5);
+
+    box-shadow:
+        0 0 14px rgba(201,138,138,.22),
+        0 0 28px rgba(201,138,138,.08),
+        0 0 0 1px rgba(201,138,138,.12);
 }
 
 .todo-text {
@@ -2875,17 +2901,23 @@ body::after{
     background:rgba(255,255,255,.06);
 
     transition:
-        transform .2s ease,
-        background .2s ease,
-        border-color .2s ease;
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
 .poem-item:hover{
     transform:translateY(-1px);
 
-    background:rgba(255,255,255,.09);
+    background:rgba(255,255,255,.12);
 
-    border-color:rgba(255,255,255,.32);
+    border-color:rgba(201,138,138,.5);
+
+    box-shadow:
+        0 0 14px rgba(201,138,138,.22),
+        0 0 28px rgba(201,138,138,.08),
+        0 0 0 1px rgba(201,138,138,.12);
 }
 
 
@@ -3649,66 +3681,48 @@ Just wait and see.
     <div class="poem-content">
 
 
-<p>Okay, so I don't know where to start, to be honest. I've never written a big letter before, especially not for a website. I'll try my best, so here we go.
+<p>Okay, so I dont know where to start, to be honest. I have never written a big letter before, especially not for a website. I will try my best, so here we go.
 
-Firstly, I just want to thank you for being in my life. You've become a part of my life—and honestly, that's an understatement. You've become a major part of it. The day we first met, I had no idea what was going to happen. Life is so silly sometimes, right? It teases you, punishes you, and sometimes rewards you with something that's going to change everything in your life. For me, that came in the form of a girl like you.
+Firstly, I just want to thank you for being in my life. You have become a part of my life and honestly, thats an understatement. You have become a major part of it. The day we first met, I had no idea what was going to happen. Life is so silly sometimes, right? It teases you, punishes you, and sometimes rewards you with something thats going to change everything in your life. For me, that came in the form of a girl like you.
 
-The moment we started talking is something I would love to relive once again. All the time we spent together talking, playing games, making fun of each other, watching movies, and trying our best to love each other from so far away... those are some of my favorite memories.
+The moment we started talking is something I would love to relive once again. All the time we spent together talking, playing games, making fun of each other, watching movies, and trying our best to love each other from so far away, those are some of my favorite memories.
 
-Long distance isn't easy, right? You know it, I know it, and everyone knows it too. People usually say, "Ugh, long distance sucks. It always ends in a week or a month," or something like that. But I'm not here to prove them wrong or right. I'm here because I know I have a purpose—a purpose to spend my life with you.
+Long distance isnt easy, right? You know it, I know it, and everyone knows it too. People usually say, "long distance sucks. It always ends in a week or a month," or something like that. But I am not here to prove them wrong or right. I am here because I know I have a purpose, a purpose to make you happy and spend my life with you.
 
-And I don't like glazing, but this time I'm keeping that side of me aside, so get outta here, overthinker Aadarsh.
+And Its so funny and emotional writing this, but today I am keeping that side of me aside, so get outta here, overthinker Aadarsh.
 
-I just want to talk about you. You are so sweet, loving, caring, and kind. I don't know if I say this enough, but you make me proud every single day. You deserve every bit of happiness and every bit of love in this world, and I hope that I'm always a part of that list too.
+You are so sweet, loving, caring, and kind. I dont know if I say this enough, but you make me proud every single day. You deserve every bit of happiness and every bit of love in this world, and I hope that I am always a part of that list too.
 
-I don't want to make this too emotional, but who am I kidding? I don't even think this is enough to make someone cry. I don't know if you're recording yourself while reading this, but if you are, please do smile for me. Even though I can't see it right now, I can definitely feel it.
+I dont want to make this too emotional, but who am I kidding? I dont even think this is enough to make someone cry. I dont know if you are recording yourself while reading this, but if you are, please do smile for me. Even though I cant see it right now, I can definitely feel it.
 
-That red string theory you told me about... I think there's a little truth to it.
+That red string theory you told me about, I think there is a little truth to it.
 
-I might run out of words, but I'll never run out of feelings for you.
+After months of work, I can finally give you something, a place made just for us. A place for our memories, moments, plans and everything in between. I really hope you like it. Please do let me know what you think and enjoy your stay. Explore a little, take your time, and see you soon.
 
-After months of work, I can finally give you something—a place made just for us. A place for our memories, our moments, and everything in between. I really hope you like it. Please do let me know what you think, and enjoy your stay. Explore a little, take your time, and I'll see you soon.
-
-I love you so muchh.</p>
+I love you so muchh my lovee.
+</p>
 
 </div>
 
-<div class="poem-footer">
-    <span>Added on:</span>
-    <span class="poem-date">04 August 2026</span>
-</div>
   </div>
 </div>
 
-<!-- Message of the Day Popup (New) -->
+<!-- Message of the Day Popup -->
 <div class="poem-popup" id="motdPopup">
   <div class="poem-box motd-box">
 
-   
-
-    
     <div class="poem-header">
-    <span class="close-poem" id="closeMotd">
+      <span class="close-poem" id="closeMotd">
         Close
-    </span>
-</div>
+      </span>
+    </div>
+
     <div class="poem-content">
-    <p>
-Hii darling, if you are reading this, I just want you to know how much I love you. I am so lucky to have you by my side, and I hope that I always do. I wanted to make you feel special, so here it is. You complete me.
+      <p>
+I just want you to know how much you really mean to me, the way you care about me, the way you love me, and all the little things you don't think about much. I am so glad that I have you by my side. A best friend, a soulmate, and the love of my life.
+      </p>
+    </div>
 
-With lots of hugs and love, from someone who cares.
-    </p>
-</div>
-
-<div class="motd-heart-wrap">
-    <button
-        class="motd-heart"
-        id="motdHeart"
-        type="button"
-        aria-label="Heart today's message"
-        aria-pressed="false"
-    >♡</button>
-</div>
   </div>
 </div>
 <!-- Notes Popup -->
@@ -3914,39 +3928,7 @@ supabaseClient
     });
 
 
-// --------- Today's Message Heart ---------
 
-const motdHeart = document.getElementById("motdHeart");
-const MOTD_HEART_KEY = "homeButOnlineMotdHeart";
-
-// Load saved heart state
-const savedMotdHeart =
-    localStorage.getItem(MOTD_HEART_KEY) === "true";
-
-if (savedMotdHeart) {
-    motdHeart.classList.add("liked");
-    motdHeart.textContent = "♥";
-    motdHeart.setAttribute("aria-pressed", "true");
-}
-
-// Heart button
-motdHeart.addEventListener("click", () => {
-
-    const liked = motdHeart.classList.toggle("liked");
-
-    motdHeart.textContent = liked ? "♥" : "♡";
-
-    motdHeart.setAttribute(
-        "aria-pressed",
-        liked ? "true" : "false"
-    );
-
-    localStorage.setItem(
-        MOTD_HEART_KEY,
-        liked
-    );
-
-});
 /* ===== To-Do List Popup ===== */
 
 const todoBtn = document.getElementById("todoBtn");
