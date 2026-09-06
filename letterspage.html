@@ -1370,7 +1370,7 @@ body::after{
 
     line-height: 1.9;
 
-    text-align: center;
+    text-align: left;
 
     margin: 0;
 
@@ -1874,10 +1874,10 @@ button{
 </div>
 
     <div class="letter-card">
-        <h3>When You Miss Me</h3>
-        <p>Not available right now.</p>
-        <button>Read Letter</button>
-    </div>
+    <h3>When You Miss Me</h3>
+    <p>Added on: 05 September 2026</p>
+    <button id="missMeLetterBtn">Read Letter</button>
+</div>
 
     <div class="letter-card">
         <h3>When You're Sad</h3>
@@ -1979,37 +1979,116 @@ button{
 </div>
 
 
+<!-- When You Miss Me Popup -->
+
+<div class="welcome-popup" id="missMePopup">
+
+    <div class="welcome-box">
+
+        <div class="welcome-header">
+
+            <span class="close-welcome" id="closeMissMe">
+                Close
+            </span>
+
+        </div>
+
+        <div class="welcome-content">
+
+            <h2>When You Miss Me</h2>
+
+            <p>
+Okay, so I dont know what time it is right now or what was the last thing we talked about, but if you opened this, I would suppose you are missing me a bit. Though, I will wish that you do not have to read this. But if you are, then I wanna know the reason why.
+
+I know this is a stupid request, but you know how silly I am sometimes and how I try to act smart when I am not. I forget about things and overdo stuff, and there are plenty of reasons why I might have forgotten something.
+
+If you are reading this when no one is around, I want you to lay down peacefully on your bed, so if there is any sort of stress on you, it will vanish like right away, in a snap.
+
+The time we first talked, I wanna go back and see how far we have come. Whenever I look back, I think to myself, what have I done to deserve a sweet, caring, and lovely girl like you? Like genuinely, I never thought I would find someone so special that the first thing I do in the morning when I wake up is check on you and text you.
+
+Every now and then, checking if you replied, checking if you have seen my messages, even checking this website in case you wrote something here. And if these are not enough reasons for you to know how much you mean to me, then I have many more to tell.
+
+I think the reason you opened this was that maybe we talked less today, or I was just busy doing some boring work and did not find proper time to give you. I get it. But the thing is, no matter how long I am gone, or if it feels like I am not quite there when we are talking, it will not stop me from wanting you the way I used to.
+
+I want you even more than yesterday.
+
+And I do not know how to write some proper letters, but I just yap. One minute I am talking about something, and the next I shift to something completely different. But I hope you like this kind of writing. If you do, please smile for me. I will feel it for sure, not even kidding.
+
+So get up, drink some water, and listen to some music while I am gone. Or you can just stay here, in the place I made just for you.
+
+Yess, I worked 3 months on this thing to give you btw.
+
+And I dont know what else to say.
+
+Fuck this, lemme just yap more.
+
+I hope by now you are feeling better, and I dont wanna make you feel heavier than before. So dww about it. I will come back to you every time. In the end, I always do.
+
+Damn, this is gonna be my signature outro from now on. So cool.
+
+Anyways, byee honeyy. See you soon.
+
+I love you so muchhh.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
 
 // ==============================
 // WHEN YOU GET HERE POPUP
 // ==============================
 
-const welcomePopup = document.getElementById("welcomePopup");
-const welcomeLetterBtn = document.getElementById("welcomeLetterBtn");
-const closeWelcome = document.getElementById("closeWelcome");
+
+// ==============================
+// WHEN YOU MISS ME POPUP
+// ==============================
+
+const missMePopup =
+    document.getElementById("missMePopup");
+
+const missMeLetterBtn =
+    document.getElementById("missMeLetterBtn");
+
+const closeMissMe =
+    document.getElementById("closeMissMe");
 
 
 // Open popup
-welcomeLetterBtn.addEventListener("click", function () {
-    welcomePopup.classList.add("show");
+
+missMeLetterBtn.addEventListener("click", function () {
+
+    missMePopup.classList.add("show");
+
 });
 
 
 // Close popup
-closeWelcome.addEventListener("click", function () {
-    welcomePopup.classList.remove("show");
+
+closeMissMe.addEventListener("click", function () {
+
+    missMePopup.classList.remove("show");
+
 });
 
 
 // Close when clicking outside the box
-welcomePopup.addEventListener("click", function (e) {
 
-    if (e.target === welcomePopup) {
-        welcomePopup.classList.remove("show");
+missMePopup.addEventListener("click", function (e) {
+
+    if (e.target === missMePopup) {
+
+        missMePopup.classList.remove("show");
+
     }
 
 });
+
 
 </script>
 </body>
